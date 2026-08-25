@@ -12,6 +12,8 @@ public class Judey {
         System.out.println("Hello! I'm Judey.\n" + "What can I do for you?");
         System.out.println("----------------------------------------");
         Scanner scanner = new Scanner(System.in);
+        String[] todo = new String[100];
+        int index = 0;
         String echo;
         while (true){
             echo = scanner.nextLine();
@@ -21,7 +23,19 @@ public class Judey {
                 System.out.println("----------------------------------------");
                 break;
             }
-            System.out.println(echo);
+            if (echo.equals("list")) {
+                String display = "";
+                for (int i = 0; i < index; i++) {
+                    String item = Integer.toString(i+1) + ". " + todo[i] + "\n";
+                    display += item;
+                }
+                System.out.println(display);
+                System.out.println("----------------------------------------");
+                continue;
+            }
+            todo[index] = echo;
+            index++;
+            System.out.println("added: " + echo);
             System.out.println("----------------------------------------");
         }
     }
