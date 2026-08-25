@@ -1,11 +1,7 @@
+import java.util.Scanner;
+
 public class Judey {
     public static void main(String[] args) {
-        /*
-        String banner = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";*/
         System.out.println("----------------------------------------");
         String banner = "JJJJJJ  uu   uu  dddddd   eeeeeee  yy   yy\n" +
                 "   JJ   uu   uu  dd   dd  ee       yy   yy\n" +
@@ -15,7 +11,18 @@ public class Judey {
         System.out.println(banner + "\n");
         System.out.println("Hello! I'm Judey.\n" + "What can I do for you?");
         System.out.println("----------------------------------------");
-        System.out.println("Bye. Hope to see you again soon!");
-        System.out.println("----------------------------------------");
+        Scanner scanner = new Scanner(System.in);
+        String echo;
+        while (true){
+            echo = scanner.nextLine();
+            System.out.println("----------------------------------------");
+            if (echo.equals("bye")){
+                System.out.println("Bye. Hope to see you again soon!");
+                System.out.println("----------------------------------------");
+                break;
+            }
+            System.out.println(echo);
+            System.out.println("----------------------------------------");
+        }
     }
 }
