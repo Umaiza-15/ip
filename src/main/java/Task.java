@@ -43,7 +43,7 @@ public class Task {
     @Override
     public String toString() {
         String done = this.getStatusIcon();
-        String item = "[" + done + "] " + this.description + "\n";
+        String item = "[" + done + "] " + this.description;
         return item;
     }
 }

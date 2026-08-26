@@ -34,7 +34,7 @@ public class Judey {
                 System.out.println("----------------------------------------");
                 continue;
             }
-            String[] words = echo.trim().split("\\s+");
+            String[] words = echo.trim().split(" ", 2);
             if (words[0].equals("mark")) {
                 if (words.length != 2) {
                     System.out.println("Please provide a task number, for example: mark 2");
@@ -87,10 +87,37 @@ public class Judey {
                     continue;
                 }
             }
-            tasks[index] = new Task(echo);
-            index++;
-            System.out.println("added: " + echo);
-            System.out.println("----------------------------------------");
+            String[] parts = echo.split("/", 3);
+            if (words[0].equals("todo")) {
+                String[] desc = echo.split(" ", 2);
+                tasks[index] = new Todo(desc[1]);
+                System.out.println("Got it. I've added this task \n" + "  " + tasks[index].toString());
+                System.out.println("Now you have " + Integer.toString(index + 1) + " tasks in this list.\n");
+                System.out.println("----------------------------------------");
+                index++;
+            }
+            else if (words[0].equals("event")) {
+                String[] desc = parts[0].trim().split(" ", 2);
+                String[] from = parts[1].trim().split(" ", 2);
+                String[] to = parts[2].trim().split(" ", 2);
+                tasks[index] = new Event(desc[1], from[1], to[1]);
+                System.out.println("Got it. I've added this task \n" + "  " + tasks[index].toString());
+                System.out.println("Now you have " + Integer.toString(index + 1) + " tasks in this list.\n");
+                System.out.println("----------------------------------------");
+                index++;
+            }
+            else if (words[0].equals("deadline")){
+                String[] desc = parts[0].trim().split(" ", 2);
+                String[] by = parts[1].trim().split(" ", 2);
+                tasks[index] = new Deadline(desc[1], by[1]);
+                System.out.println("Got it. I've added this task \n" + "  " + tasks[index].toString());
+                System.out.println("Now you have " + Integer.toString(index + 1) + " tasks in this list.\n");
+                System.out.println("----------------------------------------");
+                index++;
+            }
+            else {
+                continue;
+            }
         }
     }
 }
