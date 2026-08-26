@@ -37,6 +37,15 @@ public class Task {
     }
 
     /**
+     * Returns this task in the pipe-separated format used by Judey's save file.
+     *
+     * @return task type, completion status, and description
+     */
+    public String toFileString() {
+        return "T | " + (isDone ? "1" : "0") + " | " + description;
+    }
+
+    /**
      * Returns a formatted text representation of this task
      * @return status icon and description
      */

@@ -1,3 +1,7 @@
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -5,12 +9,15 @@ import java.util.Scanner;
 /** A console chatbot that manages a small in-memory list of tasks. */
 public class Judey {
     private static final String DIVIDER = "----------------------------------------";
+    /** Location, relative to the project root, where task data is stored. */
+    private static final Path SAVE_FILE = Path.of("data", "duke.txt");
 
     /** Starts the chatbot and continues processing commands until the user says goodbye. */
     public static void main(String[] args) {
         printWelcome();
         Scanner scanner = new Scanner(System.in);
-        List<Task> tasks = new ArrayList<>();
+        List<Task> tasks = loadTasks(); // Load saved tasks on startup
+
         while (scanner.hasNextLine()) {
             String input = scanner.nextLine().trim();
             try {
@@ -25,33 +32,105 @@ public class Judey {
         }
     }
 
+    /**
+     * Loads saved tasks from the hard disk. Returns an empty list if the file or directory does not exist yet.
+     *
+     * @return list of loaded tasks
+     */
+    private static List<Task> loadTasks() {
+        List<Task> tasks = new ArrayList<>();
+        if (!Files.exists(SAVE_FILE)) {
+            return tasks;
+        }
+
+        try {
+            List<String> lines = Files.readAllLines(SAVE_FILE, StandardCharsets.UTF_8);
+            for (String line : lines) {
+                if (line.isBlank()) {
+                    continue;
+                }
+                try {
+                    Task task = parseTaskLine(line);
+                    if (task != null) {
+                        tasks.add(task);
+                    }
+                } catch (JudeyException e) {
+                    System.out.println("Warning: Skipping corrupted save line: " + line);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Warning: Could not read save file at " + SAVE_FILE);
+        }
+        return tasks;
+    }
+
+    /**
+     * Parses a single pipe-separated line from the save file into a Task object.
+     */
+    private static Task parseTaskLine(String line) throws JudeyException {
+        String[] parts = line.split("\\s*\\|\\s*");
+        if (parts.length < 3) {
+            throw new JudeyException("Invalid line format.");
+        }
+
+        String type = parts[0];
+        boolean isDone = parts[1].equals("1");
+        String description = parts[2];
+
+        Task task;
+        switch (type) {
+            case "T":
+                task = new Todo(description);
+                break;
+            case "D":
+                if (parts.length < 4) {
+                    throw new JudeyException("Missing due date for deadline.");
+                }
+                task = new Deadline(description, parts[3]);
+                break;
+            case "E":
+                if (parts.length < 5) {
+                    throw new JudeyException("Missing time details for event.");
+                }
+                task = new Event(description, parts[3], parts[4]);
+                break;
+            default:
+                throw new JudeyException("Unknown task type.");
+        }
+
+        if (isDone) {
+            task.markAsDone();
+        }
+        return task;
+    }
+
     /** Processes one command. */
     private static void processCommand(String input, List<Task> tasks) throws JudeyException {
         String[] commandAndArgument = input.split("\\s+", 2);
         switch (commandAndArgument[0]) {
-        case "todo":
-            addTodo(commandAndArgument, tasks);
-            return;
-        case "deadline":
-            addDeadline(input, tasks);
-            return;
-        case "event":
-            addEvent(input, tasks);
-            return;
-        case "list":
-            printList(tasks);
-            return;
-        case "mark":
-            changeTaskStatus(commandAndArgument, tasks, true);
-            return;
-        case "unmark":
-            changeTaskStatus(commandAndArgument, tasks, false);
-            return;
-        case "delete":
-            deleteTask(commandAndArgument, tasks);
-            return;
-        default:
-            throw new JudeyException("Hmm, that command is still a mystery to me. Try todo, deadline, event, list, mark, unmark, delete, or bye.");
+            case "todo":
+                addTodo(commandAndArgument, tasks);
+                return;
+            case "deadline":
+                addDeadline(input, tasks);
+                return;
+            case "event":
+                addEvent(input, tasks);
+                return;
+            case "list":
+                printList(tasks);
+                return;
+            case "mark":
+                changeTaskStatus(commandAndArgument, tasks, true);
+                return;
+            case "unmark":
+                changeTaskStatus(commandAndArgument, tasks, false);
+                return;
+            case "delete":
+                deleteTask(commandAndArgument, tasks);
+                return;
+            default:
+                throw new JudeyException("Hmm, that command is still a mystery to me. Try todo, deadline, event, list, mark, unmark, delete, or bye.");
         }
     }
 
@@ -62,6 +141,7 @@ public class Judey {
         }
         Task task = new Todo(commandAndArgument[1]);
         tasks.add(task);
+        saveTasks(tasks);
         printTaskAdded(task, tasks.size());
     }
 
@@ -73,6 +153,7 @@ public class Judey {
         }
         Task task = new Deadline(parts[0].substring(9).trim(), parts[1].trim());
         tasks.add(task);
+        saveTasks(tasks);
         printTaskAdded(task, tasks.size());
     }
 
@@ -89,6 +170,7 @@ public class Judey {
         }
         Task task = new Event(description, times[0].trim(), times[1].trim());
         tasks.add(task);
+        saveTasks(tasks);
         printTaskAdded(task, tasks.size());
     }
 
@@ -110,9 +192,11 @@ public class Judey {
         System.out.println(DIVIDER);
         if (markDone) {
             tasks.get(taskNumber - 1).markAsDone();
+            saveTasks(tasks);
             System.out.println("Nice! I've marked this task as done: \n  " + tasks.get(taskNumber - 1));
         } else {
             tasks.get(taskNumber - 1).markAsNotDone();
+            saveTasks(tasks);
             System.out.println("OK, I've marked this task as not done yet: \n  " + tasks.get(taskNumber - 1));
         }
         System.out.println(DIVIDER);
@@ -134,11 +218,32 @@ public class Judey {
         }
 
         Task removedTask = tasks.remove(taskNumber - 1);
+        saveTasks(tasks);
         System.out.println(DIVIDER);
         System.out.println("Ok. I've removed this task:");
         System.out.print("  " + removedTask);
         System.out.println("Now you have " + tasks.size() + " tasks in the list.");
         System.out.println(DIVIDER);
+    }
+
+    /**
+     * Writes the current task list to disk in a simple pipe-separated format.
+     *
+     * @param tasks task list to save
+     * @throws JudeyException if the file cannot be written
+     */
+    private static void saveTasks(List<Task> tasks) throws JudeyException {
+        List<String> taskRecords = new ArrayList<>();
+        for (Task task : tasks) {
+            taskRecords.add(task.toFileString());
+        }
+
+        try {
+            Files.createDirectories(SAVE_FILE.getParent());
+            Files.write(SAVE_FILE, taskRecords, StandardCharsets.UTF_8);
+        } catch (IOException error) {
+            throw new JudeyException("I couldn't save your tasks to " + SAVE_FILE + ".");
+        }
     }
 
     /** Prints the current list of tasks. */
