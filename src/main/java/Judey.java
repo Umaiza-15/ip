@@ -2,6 +2,9 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -16,7 +19,7 @@ public class Judey {
     public static void main(String[] args) {
         printWelcome();
         Scanner scanner = new Scanner(System.in);
-        List<Task> tasks = loadTasks(); // Load saved tasks on startup
+        List<Task> tasks = loadTasks();
 
         while (scanner.hasNextLine()) {
             String input = scanner.nextLine().trim();
@@ -66,6 +69,10 @@ public class Judey {
 
     /**
      * Parses a single pipe-separated line from the save file into a Task object.
+     *
+     * @param line saved task record from disk
+     * @return constructed Task object
+     * @throws JudeyException if line formatting is invalid
      */
     private static Task parseTaskLine(String line) throws JudeyException {
         String[] parts = line.split("\\s*\\|\\s*");
@@ -120,6 +127,9 @@ public class Judey {
             case "list":
                 printList(tasks);
                 return;
+            case "events-on":
+                printTasksOnDate(commandAndArgument, tasks);
+                return;
             case "mark":
                 changeTaskStatus(commandAndArgument, tasks, true);
                 return;
@@ -130,7 +140,7 @@ public class Judey {
                 deleteTask(commandAndArgument, tasks);
                 return;
             default:
-                throw new JudeyException("Hmm, that command is still a mystery to me. Try todo, deadline, event, list, mark, unmark, delete, or bye.");
+                throw new JudeyException("Hmm, that command is still a mystery to me. Try todo, deadline, event, list, events-on, mark, unmark, delete, or bye.");
         }
     }
 
@@ -149,7 +159,7 @@ public class Judey {
     private static void addDeadline(String input, List<Task> tasks) throws JudeyException {
         String[] parts = input.split("\\s*/by\\s*", 2);
         if (parts.length != 2 || !parts[0].startsWith("deadline ") || parts[0].substring(9).isBlank() || parts[1].isBlank()) {
-            throw new JudeyException("That deadline needs a little more sparkle: deadline report /by Friday");
+            throw new JudeyException("That deadline needs a date! Try: deadline report /by 2/12/2019 1800");
         }
         Task task = new Deadline(parts[0].substring(9).trim(), parts[1].trim());
         tasks.add(task);
@@ -172,6 +182,47 @@ public class Judey {
         tasks.add(task);
         saveTasks(tasks);
         printTaskAdded(task, tasks.size());
+    }
+
+    /**
+     * Prints all deadlines or events occurring on the given date.
+     *
+     * @param commandAndArgument split array containing the search date
+     * @param tasks list of tasks to filter
+     * @throws JudeyException if no date is provided or format is invalid
+     */
+    private static void printTasksOnDate(String[] commandAndArgument, List<Task> tasks) throws JudeyException {
+        if (commandAndArgument.length < 2 || commandAndArgument[1].isBlank()) {
+            throw new JudeyException("Please supply a date! Try: events-on 2/12/2019");
+        }
+
+        LocalDate searchDate;
+        try {
+            searchDate = LocalDate.parse(commandAndArgument[1].trim(), DateTimeFormatter.ofPattern("d/M/yyyy"));
+        } catch (DateTimeParseException e) {
+            throw new JudeyException("Invalid date format. Try: d/M/yyyy (e.g., 2/12/2019)");
+        }
+
+        System.out.println(DIVIDER);
+        System.out.println("Tasks on " + searchDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy")) + ":");
+        int count = 0;
+        for (Task task : tasks) {
+            boolean match = false;
+            if (task instanceof Deadline) {
+                match = ((Deadline) task).getBy().toLocalDate().equals(searchDate);
+            } else if (task instanceof Event) {
+                match = ((Event) task).getFrom().toLocalDate().equals(searchDate);
+            }
+
+            if (match) {
+                count++;
+                System.out.print(count + "." + task);
+            }
+        }
+        if (count == 0) {
+            System.out.println(" No deadlines or events found on this date.");
+        }
+        System.out.println(DIVIDER);
     }
 
     /** Marks or unmarks the requested task after validating its number. */
