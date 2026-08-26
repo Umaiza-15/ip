@@ -135,7 +135,7 @@ public class Judey {
 
         Task removedTask = tasks.remove(taskNumber - 1);
         System.out.println(DIVIDER);
-        System.out.println("Noted. I've removed this task:");
+        System.out.println("Ok. I've removed this task:");
         System.out.print("  " + removedTask);
         System.out.println("Now you have " + tasks.size() + " tasks in the list.");
         System.out.println(DIVIDER);
