@@ -1,3 +1,7 @@
+package judey.task;
+
+import judey.exception.JudeyException;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -32,7 +36,7 @@ public class Event extends Task {
     }
 
     /**
-     * Returns this event in the pipe-separated format used by Judey's save file.
+     * Returns this event in the pipe-separated format used by judey.Judey's save file.
      *
      * @return event type, completion status, description, start time, and end time
      */

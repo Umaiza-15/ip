@@ -1,3 +1,5 @@
+package judey.task;
+
 public class Task {
     /**
      * Represents a task with a description and completion status
@@ -37,7 +39,7 @@ public class Task {
     }
 
     /**
-     * Returns this task in the pipe-separated format used by Judey's save file.
+     * Returns this task in the pipe-separated format used by judey.Judey's save file.
      *
      * @return task type, completion status, and description
      */

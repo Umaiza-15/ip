@@ -1,3 +1,7 @@
+package judey.ui;
+
+import judey.task.Task;
+
 import java.util.Scanner;
 
 /** Handles interactions with the user, including reading inputs and printing outputs. */
@@ -33,7 +37,7 @@ public class Ui {
                 + "JJ JJ   uu   uu  dd   dd  ee         yyy\n"
                 + " JJJ     uuuu u  dddddd   eeeeeee    yyy";
         System.out.println(banner + "\n");
-        System.out.println("Hello! I'm Judey.\nWhat can I do for you?");
+        System.out.println("Hello! I'm judey.Judey.\nWhat can I do for you?");
         showLine();
     }
 
