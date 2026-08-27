@@ -1,5 +1,7 @@
+package judey.exception;
+
 /**
- * Represents an error caused by an invalid command entered into Judey.
+ * Represents an error caused by an invalid command entered into judey.Judey.
  */
 public class JudeyException extends Exception {
     /**

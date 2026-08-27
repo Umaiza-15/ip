@@ -1,3 +1,7 @@
+package judey.task;
+
+import judey.exception.JudeyException;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -30,7 +34,7 @@ public class Deadline extends Task {
     }
 
     /**
-     * Returns this deadline in the pipe-separated format used by Judey's save file.
+     * Returns this deadline in the pipe-separated format used by judey.Judey's save file.
      *
      * @return deadline type, completion status, description, and due date
      */

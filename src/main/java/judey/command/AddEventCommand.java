@@ -1,3 +1,12 @@
+package judey.command;
+
+import judey.exception.JudeyException;
+import judey.storage.Storage;
+import judey.task.Event;
+import judey.task.Task;
+import judey.task.TaskList;
+import judey.ui.Ui;
+
 public class AddEventCommand extends Command {
     private final String description;
     private final String from;

@@ -1,3 +1,11 @@
+package judey.storage;
+
+import judey.task.Task;
+import judey.task.Todo;
+import judey.exception.JudeyException;
+import judey.task.Deadline;
+import judey.task.Event;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -46,7 +54,7 @@ public class Storage {
         return tasks;
     }
 
-    /** Parses a saved text record into a Task object. */
+    /** Parses a saved text record into a judey.task.Task object. */
     private Task parseTaskLine(String line) throws JudeyException {
         String[] parts = line.split("\\s*\\|\\s*");
         if (parts.length < 3) {

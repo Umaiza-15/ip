@@ -1,4 +1,13 @@
-/** Main entry point for the Judey task manager application. */
+package judey;
+
+import judey.command.Command;
+import judey.exception.JudeyException;
+import judey.parser.Parser;
+import judey.storage.Storage;
+import judey.task.TaskList;
+import judey.ui.Ui;
+
+/** Main entry point for the judey.Judey task manager application. */
 public class Judey {
     private final Storage storage;
     private TaskList tasks;

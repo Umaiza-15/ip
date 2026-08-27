@@ -1,15 +1,20 @@
+package judey.parser;
+
+import judey.command.*;
+import judey.exception.JudeyException;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-/** Parses user input into concrete Command objects. */
+/** Parses user input into concrete judey.command.Command objects. */
 public class Parser {
 
     /**
      * Parses the full user input command string.
      *
      * @param fullCommand raw command entered by user
-     * @return executable Command instance
+     * @return executable judey.command.Command instance
      * @throws JudeyException if input format or command name is invalid
      */
     public static Command parse(String fullCommand) throws JudeyException {
@@ -85,7 +90,7 @@ public class Parser {
         try {
             return Integer.parseInt(parts[1].trim()) - 1;
         } catch (NumberFormatException e) {
-            throw new JudeyException("Task numbers are whole numbers only; no decimals or letters this time!");
+            throw new JudeyException("judey.task.Task numbers are whole numbers only; no decimals or letters this time!");
         }
     }
 }
