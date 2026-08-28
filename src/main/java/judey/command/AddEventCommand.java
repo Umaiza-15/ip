@@ -4,7 +4,7 @@ import judey.exception.JudeyException;
 import judey.storage.Storage;
 import judey.task.Event;
 import judey.task.Task;
-import judey.task.TaskList;
+import judey.tasklist.TaskList;
 import judey.ui.Ui;
 
 public class AddEventCommand extends Command {

@@ -4,7 +4,7 @@ import judey.exception.JudeyException;
 import judey.storage.Storage;
 import judey.task.Task;
 import judey.task.Todo;
-import judey.task.TaskList;
+import judey.tasklist.TaskList;
 import judey.ui.Ui;
 
 public class AddTodoCommand extends Command {
