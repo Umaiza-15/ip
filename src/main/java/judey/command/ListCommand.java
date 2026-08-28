@@ -1,7 +1,7 @@
 package judey.command;
 
 import judey.storage.Storage;
-import judey.task.TaskList;
+import judey.tasklist.TaskList;
 import judey.ui.Ui;
 
 public class ListCommand extends Command {

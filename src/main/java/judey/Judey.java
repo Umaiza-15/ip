@@ -4,7 +4,7 @@ import judey.command.Command;
 import judey.exception.JudeyException;
 import judey.parser.Parser;
 import judey.storage.Storage;
-import judey.task.TaskList;
+import judey.tasklist.TaskList;
 import judey.ui.Ui;
 
 /** Main entry point for the judey.Judey task manager application. */

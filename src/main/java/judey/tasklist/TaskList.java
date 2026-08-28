@@ -1,6 +1,9 @@
-package judey.task;
+package judey.tasklist;
 
 import judey.exception.JudeyException;
+import judey.task.Deadline;
+import judey.task.Event;
+import judey.task.Task;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
