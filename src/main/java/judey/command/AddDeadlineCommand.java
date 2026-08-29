@@ -24,6 +24,11 @@ public class AddDeadlineCommand extends Command {
         this.by = by;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws JudeyException If the deadline format is invalid or saving fails.
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws JudeyException {
         Task task = new Deadline(description, by);
