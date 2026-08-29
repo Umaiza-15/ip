@@ -78,8 +78,15 @@ public class Parser {
             case "delete":
                 return new DeleteCommand(parseIndex(parts));
 
+            case "find":
+                if (parts.length < 2 || parts[1].isBlank()) {
+                    throw new JudeyException("Please provide a keyword to search for! Try: find book");
+                }
+                return new FindCommand(parts[1].trim());
+
             default:
-                throw new JudeyException("Hmm, that command is still a mystery to me. Try todo, deadline, event, list, events-on, mark, unmark, delete, or bye.");
+                throw new JudeyException("Hmm, that command is still a mystery to me. " +
+                        "Try todo, deadline, event, list, find, events-on, mark, unmark, delete, or bye.");
         }
     }
 
