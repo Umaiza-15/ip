@@ -83,6 +83,13 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses a 1-based task index string from split command parts and converts it to a 0-based integer index.
+     *
+     * @param parts The array of input arguments split from the user's raw command line.
+     * @return The parsed 0-based integer index suitable for internal list indexing.
+     * @throws JudeyException If the input parts lack an index argument, or if the argument is not a valid integer.
+     */
     private static int parseIndex(String[] parts) throws JudeyException {
         if (parts.length < 2 || parts[1].isBlank()) {
             throw new JudeyException("I need a valid task number to perform that command.");
@@ -90,7 +97,7 @@ public class Parser {
         try {
             return Integer.parseInt(parts[1].trim()) - 1;
         } catch (NumberFormatException e) {
-            throw new JudeyException("judey.task.Task numbers are whole numbers only; no decimals or letters this time!");
+            throw new JudeyException("Task numbers are whole numbers only; no decimals or letters this time!");
         }
     }
 }

@@ -6,9 +6,16 @@ import judey.task.Task;
 import judey.tasklist.TaskList;
 import judey.ui.Ui;
 
+/**
+ * Represents deleting a task
+ */
 public class DeleteCommand extends Command {
     private final int index;
 
+    /**
+     * Creates a Delete command
+     * @param index task at this index in the list would be deleted through execute
+     */
     public DeleteCommand(int index) {
         this.index = index;
     }

@@ -54,7 +54,14 @@ public class Storage {
         return tasks;
     }
 
-    /** Parses a saved text record into a judey.task.Task object. */
+    /**
+     * Parses a single formatted string line from the storage file into a corresponding Task object.
+     *
+     * @param line The string line read from the save file.
+     * @return The reconstructed {@code Task} instance with its saved completion status.
+     * @throws JudeyException If the line format is malformed, missing required task details,
+     *                        or contains an unrecognized task type.
+     */
     private Task parseTaskLine(String line) throws JudeyException {
         String[] parts = line.split("\\s*\\|\\s*");
         if (parts.length < 3) {

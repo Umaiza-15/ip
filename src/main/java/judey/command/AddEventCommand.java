@@ -7,11 +7,20 @@ import judey.task.Task;
 import judey.tasklist.TaskList;
 import judey.ui.Ui;
 
+/**
+ * Represents the action of adding an Event task
+ */
 public class AddEventCommand extends Command {
     private final String description;
     private final String from;
     private final String to;
 
+    /**
+     * Creates an Event task
+     * @param description represents what the task is about
+     * @param from represents the time at which the event starts
+     * @param to represents the time at which the event ends
+     */
     public AddEventCommand(String description, String from, String to) {
         this.description = description;
         this.from = from;

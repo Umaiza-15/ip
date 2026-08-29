@@ -13,6 +13,10 @@ public class Judey {
     private TaskList tasks;
     private final Ui ui;
 
+    /**
+     * Creates an instance of judey with a file path where the list of tasks would be stored
+     * @param filePath location that the list of tasks is stored to
+     */
     public Judey(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
