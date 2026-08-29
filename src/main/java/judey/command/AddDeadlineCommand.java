@@ -7,10 +7,18 @@ import judey.task.Task;
 import judey.tasklist.TaskList;
 import judey.ui.Ui;
 
+/**
+ * Represents the action of adding a Deadline task
+ */
 public class AddDeadlineCommand extends Command {
     private final String description;
     private final String by;
 
+    /**
+     * Creates a Deadline task
+     * @param description represents the task description
+     * @param by represents the deadline the task is due by
+     */
     public AddDeadlineCommand(String description, String by) {
         this.description = description;
         this.by = by;

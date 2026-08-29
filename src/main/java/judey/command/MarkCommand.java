@@ -6,6 +6,9 @@ import judey.task.Task;
 import judey.tasklist.TaskList;
 import judey.ui.Ui;
 
+/**
+ * Represents a command that marks or unmarks a task as done
+ */
 public class MarkCommand extends Command {
     private final int index;
     private final boolean isDone;
