@@ -140,4 +140,24 @@ public class TaskList {
             System.out.println(" No deadlines or events found on this date.");
         }
     }
+
+    /**
+     * Searches for tasks matching a keyword and prints formatted results.
+     *
+     * @param keyword search term to query against descriptions
+     */
+    public void findTasks(String keyword) {
+        //System.out.println("____________________________________________________________");
+        System.out.println("Here are the matching tasks in your list:");
+        int matchCount = 0;
+        for (Task task : tasks) {
+            if (task.getDescription().toLowerCase().contains(keyword.toLowerCase())) {
+                matchCount++;
+                System.out.print(matchCount + "." + task);
+            }
+        }
+        if (matchCount == 0) {
+            System.out.println("No matching tasks found.");
+        }
+    }
 }
