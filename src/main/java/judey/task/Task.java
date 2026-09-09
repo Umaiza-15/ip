@@ -12,6 +12,9 @@ public class Task {
      * @param desc the text describing this task
      */
     public Task(String desc) {
+        assert desc != null && !desc.isBlank()
+                : "Task description should never be null or blank; "
+                + "Parser/command classes are expected to validate and trim input before constructing a Task";
         this.isDone = false;
         this.description = desc;
     }
