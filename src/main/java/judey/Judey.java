@@ -1,5 +1,8 @@
 package judey;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
 import judey.command.Command;
 import judey.exception.JudeyException;
 import judey.parser.Parser;
@@ -26,6 +29,36 @@ public class Judey {
             ui.showLoadingError();
             tasks = new TaskList();
         }
+    }
+
+    /**
+     * Creates an instance of judey with the default save file location.
+     * Needed by the GUI, which does not pass a file path explicitly.
+     */
+    public Judey() {
+        this("data/duke.txt");
+    }
+
+    /**
+     * Processes a single line of user input and returns judey's reply as a String,
+     * instead of printing it straight to the console. Used by the GUI.
+     *
+     * @param input raw command entered by the user
+     * @return judey's response text
+     */
+    public String getResponse(String input) {
+        ByteArrayOutputStream capturedOutput = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out;
+        System.setOut(new PrintStream(capturedOutput));
+        try {
+            Command c = Parser.parse(input);
+            c.execute(tasks, ui, storage);
+        } catch (JudeyException e) {
+            ui.showError(e.getMessage());
+        } finally {
+            System.setOut(originalOut);
+        }
+        return capturedOutput.toString().trim();
     }
 
     /** Runs the chatbot main loop. */
