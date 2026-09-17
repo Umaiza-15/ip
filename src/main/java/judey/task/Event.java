@@ -10,9 +10,6 @@ import java.time.format.DateTimeParseException;
  * Represents a task with an event duration - start and end time
  */
 public class Event extends Task {
-    private static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
-    private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mma");
-
     protected LocalDateTime from;
     protected LocalDateTime to;
 
@@ -25,26 +22,8 @@ public class Event extends Task {
      */
     public Event(String desc, String from, String to) throws JudeyException {
         super(desc);
-        this.from = parseDateTime(from);
-        this.to = parseDateTime(to);
-    }
-
-    /**
-     * Parses a text string into a {@code LocalDateTime} object using d/M/yyyy HHmm formatting
-     * @param text the date/time to be parsed
-     * @return the parsed {@code LocalDateTime} object
-     * @throws JudeyException If the text does not match any valid date/time format
-     */
-    private LocalDateTime parseDateTime(String text) throws JudeyException {
-        try {
-            return LocalDateTime.parse(text);
-        } catch (DateTimeParseException e1) {
-            try {
-                return LocalDateTime.parse(text, INPUT_FORMAT);
-            } catch (DateTimeParseException e2) {
-                throw new JudeyException("Please use date format: d/M/yyyy HHmm (e.g., 2/12/2019 1800)");
-            }
-        }
+        this.from = DateTimeUtil.parse(from);
+        this.to = DateTimeUtil.parse(to);
     }
 
     /**
@@ -57,13 +36,13 @@ public class Event extends Task {
 
     @Override
     public String toFileString() {
-        return "E | " + (isDone ? "1" : "0") + " | " + description + " | " + from + " | " + to;
+        return TYPE_EVENT +  " | " + (isDone ? DONE_MARKER: NOT_DONE_MARKER) + " | " + description + " | " + from + " | " + to;
     }
 
     @Override
     public String toString() {
-        String display = "[E]" + super.toString();
-        display += " (from: " + this.from.format(OUTPUT_FORMAT) + " to: " + this.to.format(OUTPUT_FORMAT) + ")\n";
+        String display = "[" + TYPE_EVENT + "]" + super.toString();
+        display += " (from: " + DateTimeUtil.format(from) + " to: " + DateTimeUtil.format(to) + ")\n";
         return display;
     }
 }

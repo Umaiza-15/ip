@@ -40,6 +40,24 @@ public class Judey {
     }
 
     /**
+     * Returns judey's welcome greeting as a String, for use by the GUI.
+     * The CLI shows the same greeting via {@link Ui#showWelcome()}.
+     *
+     * @return the welcome message text
+     */
+    public String getWelcomeMessage() {
+        ByteArrayOutputStream capturedOutput = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out;
+        System.setOut(new PrintStream(capturedOutput));
+        try {
+            ui.showWelcome();
+        } finally {
+            System.setOut(originalOut);
+        }
+        return capturedOutput.toString().trim();
+    }
+
+    /**
      * Processes a single line of user input and returns judey's reply as a String,
      * instead of printing it straight to the console. Used by the GUI.
      *

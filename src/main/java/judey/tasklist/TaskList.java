@@ -147,7 +147,6 @@ public class TaskList {
      * @param keyword search term to query against descriptions
      */
     public void findTasks(String keyword) {
-        //System.out.println("____________________________________________________________");
         System.out.println("Here are the matching tasks in your list:");
         int matchCount = 0;
         for (Task task : tasks) {

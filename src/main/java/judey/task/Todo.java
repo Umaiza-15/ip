@@ -14,7 +14,7 @@ public class Todo extends Task{
 
     @Override
     public String toString(){
-        return "[T]" + super.toString() + "\n";
+        return "[" + TYPE_TODO + "]" + super.toString() + "\n";
     }
 
 }

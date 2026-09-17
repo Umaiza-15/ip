@@ -1,7 +1,5 @@
 package judey.gui;
 
-import judey.gui.MainWindow;
-
 import java.io.IOException;
 import java.util.Collections;
 
@@ -58,6 +56,12 @@ public class DialogBox extends HBox {
     public static DialogBox getDukeDialog(String text, Image img) {
         var db = new DialogBox(text, img);
         db.flip();
+        return db;
+    }
+
+    public static DialogBox getBannerDialog(String text, Image img) {
+        var db = getDukeDialog(text, img);
+        db.dialog.getStyleClass().add("banner-label");
         return db;
     }
 }

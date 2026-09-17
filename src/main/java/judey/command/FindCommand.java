@@ -20,7 +20,7 @@ public class FindCommand extends Command{
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws JudeyException{
+    public void execute(TaskList tasks, Ui ui, Storage storage) throws JudeyException {
         tasks.findTasks(keyword);
     }
 }

@@ -19,11 +19,6 @@ public class Ui {
         return scanner.nextLine().trim();
     }
 
-    /** Checks if there is another command available. */
-    public boolean hasNextCommand() {
-        return scanner.hasNextLine();
-    }
-
     /** Prints a visual divider line. */
     public void showLine() {
         System.out.println(DIVIDER);
@@ -38,7 +33,7 @@ public class Ui {
                 + "JJ JJ   uu   uu  dd   dd  ee         yyy\n"
                 + " JJJ     uuuu u  dddddd   eeeeeee    yyy";
         System.out.println(banner + "\n");
-        System.out.println("Hello! I'm judey.Judey.\nWhat can I do for you?");
+        System.out.println("Hello! I'm Judey.\nWhat can I do for you?");
         showLine();
     }
 
