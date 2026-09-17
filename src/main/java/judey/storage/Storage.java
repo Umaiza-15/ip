@@ -74,16 +74,16 @@ public class Storage {
 
         Task task;
         switch (type) {
-        case "T":
+            case Task.TYPE_TODO:
             task = new Todo(description);
             break;
-        case "D":
+            case Task.TYPE_DEADLINE:
             if (parts.length < 4) {
                 throw new JudeyException("Missing due date for deadline.");
             }
             task = new Deadline(description, parts[3]);
             break;
-        case "E":
+            case Task.TYPE_EVENT:
             if (parts.length < 5) {
                 throw new JudeyException("Missing time details for event.");
             }

@@ -4,6 +4,12 @@ public class Task {
     /**
      * Represents a task with a description and completion status
      */
+    public static final String TYPE_TODO = "T";
+    public static final String TYPE_DEADLINE = "D";
+    public static final String TYPE_EVENT = "E";
+    public static final String DONE_MARKER = "1";
+    public static final String NOT_DONE_MARKER = "0";
+
     protected boolean isDone; //whether the task is done
     protected String description; //the task description
 
@@ -44,7 +50,7 @@ public class Task {
      * @return task type, completion status, and description
      */
     public String toFileString() {
-        return "T | " + (isDone ? "1" : "0") + " | " + description;
+        return TYPE_TODO + " | " + (isDone ? DONE_MARKER : NOT_DONE_MARKER) + " | " + description;
     }
 
     /**
@@ -63,7 +69,6 @@ public class Task {
     @Override
     public String toString() {
         String done = this.getStatusIcon();
-        String item = "[" + done + "] " + this.description;
-        return item;
+        return "[" + done + "] " + this.description;
     }
 }

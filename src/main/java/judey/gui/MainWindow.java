@@ -36,6 +36,9 @@ public class MainWindow extends AnchorPane {
     /** Injects the Judey instance */
     public void setJudey(Judey j) {
         judey = j;
+        dialogContainer.getChildren().add(
+                DialogBox.getBannerDialog(judey.getWelcomeMessage(), dukeImage)
+        );
     }
 
     /**
