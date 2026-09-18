@@ -64,4 +64,11 @@ public class DialogBox extends HBox {
         db.dialog.getStyleClass().add("banner-label");
         return db;
     }
+
+    /** Creates a styled dialog box for the application's help content. */
+    public static DialogBox getHelpDialog(String text, Image img) {
+        var db = getDukeDialog(text, img);
+        db.dialog.getStyleClass().add("help-label");
+        return db;
+    }
 }

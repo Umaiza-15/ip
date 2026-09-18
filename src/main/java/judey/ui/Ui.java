@@ -37,6 +37,29 @@ public class Ui {
         showLine();
     }
 
+    /** Prints the available commands and examples for using Judey. */
+    public void showHelp() {
+        showLine();
+        System.out.println("Judey Help\n");
+        System.out.println("Creating tasks:");
+        System.out.println("  todo <description>\n    Example: todo read book\n");
+        System.out.println("  deadline <description> /by <date and time>\n"
+                + "    Example: deadline submit report /by 2026-12-31 2359\n");
+        System.out.println("  event <description> /from <date and time> /to <date and time>\n"
+                + "    Example: event team meeting /from 2026-10-15 1400 /to 2026-10-15 1600\n");
+        System.out.println("Managing tasks:");
+        System.out.println("  list\n    Example: list\n");
+        System.out.println("  mark <task number>\n    Example: mark 1\n");
+        System.out.println("  unmark <task number>\n    Example: unmark 1\n");
+        System.out.println("  delete <task number>\n    Example: delete 1\n");
+        System.out.println("Searching and filtering:");
+        System.out.println("  events-on <date>\n    Example: events-on 2/12/2019\n");
+        System.out.println("Application:");
+        System.out.println("  help\n    Example: help\n");
+        System.out.println("  bye\n    Example: bye");
+        showLine();
+    }
+
     /** Prints the farewell message. */
     public void showGoodbye() {
         showLine();

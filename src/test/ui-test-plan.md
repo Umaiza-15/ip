@@ -36,6 +36,117 @@ Bye. Hope to see you again soon!
 ----------------------------------------
 ```
 
+## Test case: Display help
+
+### Aim
+
+Verify that `help` displays the available commands and examples, then allows the user to continue.
+
+### Inputs
+
+```text
+help
+bye
+```
+
+### Expected output
+
+```text
+----------------------------------------
+JJJJJJ  uu   uu  dddddd   eeeeeee  yy   yy
+   JJ   uu   uu  dd   dd  ee       yy   yy
+   JJ   uu   uu  dd   dd  eeeee     yyyyy
+JJ JJ   uu   uu  dd   dd  ee         yyy
+ JJJ     uuuu u  dddddd   eeeeeee    yyy
+
+Hello! I'm Judey.
+What can I do for you?
+----------------------------------------
+----------------------------------------
+----------------------------------------
+Judey Help
+
+Creating tasks:
+  todo <description>
+    Example: todo read book
+
+  deadline <description> /by <date and time>
+    Example: deadline submit report /by 2026-12-31 2359
+
+  event <description> /from <date and time> /to <date and time>
+    Example: event team meeting /from 2026-10-15 1400 /to 2026-10-15 1600
+
+Managing tasks:
+  list
+    Example: list
+
+  mark <task number>
+    Example: mark 1
+
+  unmark <task number>
+    Example: unmark 1
+
+  delete <task number>
+    Example: delete 1
+
+Searching and filtering:
+  events-on <date>
+    Example: events-on 2/12/2019
+
+Application:
+  help
+    Example: help
+
+  bye
+    Example: bye
+----------------------------------------
+----------------------------------------
+----------------------------------------
+----------------------------------------
+Bye. Hope to see you again soon!
+----------------------------------------
+----------------------------------------
+```
+
+## Test case: Reject help arguments
+
+### Aim
+
+Verify that `help` rejects additional arguments.
+
+### Inputs
+
+```text
+help extra
+bye
+```
+
+### Expected output
+
+```text
+----------------------------------------
+JJJJJJ  uu   uu  dddddd   eeeeeee  yy   yy
+   JJ   uu   uu  dd   dd  ee       yy   yy
+   JJ   uu   uu  dd   dd  eeeee     yyyyy
+JJ JJ   uu   uu  dd   dd  ee         yyy
+ JJJ     uuuu u  dddddd   eeeeeee    yyy
+
+Hello! I'm Judey.
+What can I do for you?
+----------------------------------------
+----------------------------------------
+----------------------------------------
+----------------------------------------
+Oopsie! The help command does not take any arguments. Try: help
+----------------------------------------
+----------------------------------------
+----------------------------------------
+----------------------------------------
+Bye. Hope to see you again soon!
+----------------------------------------
+----------------------------------------
+```
+
 ## Test case: Add and list a todo
 
 ### Aim

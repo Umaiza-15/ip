@@ -1,30 +1,29 @@
-# Duke User Guide
+# Judey User Guide
 
-// Update the title above to match the actual product name
+## Getting help
 
-// Product screenshot goes here
+Enter `help` to display all available commands and syntax examples. The command does not accept arguments.
 
-// Product intro goes here
+## Commands
 
-## Adding deadlines
+### Creating tasks
 
-// Describe the action and its outcome.
+- `todo <description>` — create a todo task.
+- `deadline <description> /by <date and time>` — create a deadline task.
+- `event <description> /from <date and time> /to <date and time>` — create an event task.
 
-// Give examples of usage
+### Managing tasks
 
-Example: `keyword (optional arguments)`
+- `list` — display all tasks.
+- `mark <task number>` — mark a task as done.
+- `unmark <task number>` — mark a task as not done.
+- `delete <task number>` — delete a task.
 
-// A description of the expected outcome goes here
+### Searching and filtering
 
-```
-expected output
-```
+- `events-on <date>` — display events on a date.
 
-## Feature ABC
+### Application
 
-// Feature details
-
-
-## Feature XYZ
-
-// Feature details
+- `help` — display this guide.
+- `bye` — exit Judey.

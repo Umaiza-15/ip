@@ -25,6 +25,21 @@ public class ParserTest {
     }
 
     @Test
+    public void parseCommand_help_returnsHelpCommand() throws Exception {
+        Command command = Parser.parse("   help   ");
+        assertInstanceOf(HelpCommand.class, command);
+    }
+
+    @Test
+    public void parseCommand_helpWithArguments_exceptionThrown() {
+        JudeyException exception = assertThrows(
+                JudeyException.class,
+                () -> Parser.parse("help extra")
+        );
+        assertEquals("The help command does not take any arguments. Try: help", exception.getMessage());
+    }
+
+    @Test
     public void parseCommand_todoWithDescription_returnsAddCommand() throws Exception {
         Command command = Parser.parse("todo read book");
         assertInstanceOf(AddTodoCommand.class, command);

@@ -49,10 +49,12 @@ public class MainWindow extends AnchorPane {
     private void handleUserInput() {
         String input = userInput.getText();
         String response = judey.getResponse(input);
-        dialogContainer.getChildren().addAll(
-                DialogBox.getUserDialog(input, userImage),
-                DialogBox.getDukeDialog(response, dukeImage)
-        );
+        dialogContainer.getChildren().add(DialogBox.getUserDialog(input, userImage));
+        if (input.trim().equals("help")) {
+            dialogContainer.getChildren().add(DialogBox.getHelpDialog(response, dukeImage));
+        } else {
+            dialogContainer.getChildren().add(DialogBox.getDukeDialog(response, dukeImage));
+        }
         userInput.clear();
     }
 }

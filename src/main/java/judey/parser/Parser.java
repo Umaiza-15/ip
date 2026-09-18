@@ -11,6 +11,7 @@ import judey.command.Command;
 import judey.command.DeleteCommand;
 import judey.command.EventsOnCommand;
 import judey.command.ExitCommand;
+import judey.command.HelpCommand;
 import judey.command.ListCommand;
 import judey.command.MarkCommand;
 import judey.exception.JudeyException;
@@ -26,6 +27,11 @@ public class Parser {
         switch (commandWord) {
             case "bye":
                 return new ExitCommand();
+            case "help":
+                if (!args.isBlank()) {
+                    throw new JudeyException("The help command does not take any arguments. Try: help");
+                }
+                return new HelpCommand();
             case "list":
                 return new ListCommand();
             case "todo":
@@ -44,7 +50,7 @@ public class Parser {
                 return new DeleteCommand(parseIndex(args));
             default:
                 throw new JudeyException("Hmm, that command is still a mystery to me. "
-                        + "Try todo, deadline, event, list, events-on, mark, unmark, delete, or bye.");
+                        + "Try todo, deadline, event, list, events-on, mark, unmark, delete, help, or bye.");
         }
     }
 
