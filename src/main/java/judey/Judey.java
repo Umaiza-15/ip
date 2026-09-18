@@ -36,7 +36,7 @@ public class Judey {
      * Needed by the GUI, which does not pass a file path explicitly.
      */
     public Judey() {
-        this("data/duke.txt");
+        this("data/judey.txt");
     }
 
     /**
@@ -100,6 +100,6 @@ public class Judey {
     }
 
     public static void main(String[] args) {
-        new Judey("data/duke.txt").run();
+        new Judey("data/judey.txt").run();
     }
 }

@@ -1,45 +1,162 @@
 # Judey User Guide
 
-Judey is a playful astronaut-cat assistant for keeping your tasks in orbit.
-The interface uses a dark space theme with neon Japan-night-city accents.
+**Judey** is a friendly astronaut-cat chatbot for organising your tasks. You can use it to record todos, deadlines, and events, then manage them from the task list.
 
-## Getting help
+## Appendix: Quick navigation
 
-Enter `help` to display all available commands and syntax examples. The command does not accept arguments.
+- [Getting started](#getting-started)
+- [Using Judey](#using-judey)
+  - [Quick start](#quick-start)
+  - [Command format](#command-format)
+- [Command summary](#command-summary)
+- [Command details](#command-details)
+  - [Add tasks](#add-tasks)
+  - [Manage tasks](#manage-tasks)
+  - [Find events by date](#find-events-by-date)
+  - [The `help` command](#the-help-command)
+  - [The `bye` command](#the-bye-command)
+- [Common problems](#common-problems)
+- [Tips](#tips)
 
-## Commands
+## Getting started
 
-### Creating tasks
+### Prerequisite
 
-- `todo <description>` — create a todo task.
-- `deadline <description> /by <date and time>` — create a deadline task.
-- `event <description> /from <date and time> /to <date and time>` — create an event task.
+- Java Development Kit (JDK) 25
 
-### Managing tasks
+To get started:
 
-- `list` — display all tasks.
-- `mark <task number>` — mark a task as done.
-- `unmark <task number>` — mark a task as not done.
-- `delete <task number>` — delete a task.
+1. Download the latest `judey.jar` from the project's [Releases page](https://github.com/Umaiza-15/ip/releases).
+1. Create an empty folder where you want Judey to store your task data.
+1. Place the downloaded JAR file inside that folder.
+1. Open a terminal in that folder.
+1. Run the following command:
 
-### Searching and filtering
+   ```text
+   java -jar judey.jar
+   ```
 
-- `events-on <date>` — display events on a date.
+The Judey window will open with a chat box for entering commands. Your tasks will be saved in a `data` subfolder as `data/judey.txt`.
 
-### Application
+Your tasks are saved automatically in `data/judey.txt`, so they will still be available the next time you start Judey from the same folder.
 
-- `help` — display this guide.
-- `bye` — exit Judey.
+## Using Judey
 
-## Error guidance
+Type one command at a time, then press **Enter** or click **Send**. Task numbers are assigned by the order shown by `list`, starting from 1.
 
-In the GUI, invalid commands remain visible in the original user-message bubble. Judey then shows a red error bubble
-with a correction template. The first missing or invalid placeholder is highlighted. For example, entering `event`
-shows:
+### Quick start
+
+Try these commands in order:
 
 ```text
-event <description> /from <start date and start time: d/M/yyyy HHmm> /to <end date and end time: d/M/yyyy HHmm>
+todo buy groceries
+deadline submit assignment /by 25/9/2026 2359
+event project meeting /from 26/9/2026 1400 /to 26/9/2026 1500
+list
+mark 1
 ```
 
-The command syntax and stored task format are unchanged. Invalid commands are not saved. The command-line interface
-continues to display plain-text errors without GUI highlighting.
+Use the task number shown by `list` when marking, unmarking, or deleting a task.
+
+### Command format
+
+- Commands are **case-sensitive**. Use lowercase commands such as `todo`, `list`, and `bye`.
+- Text in angle brackets, such as `<description>` or `<task number>`, is a placeholder. Replace it with your own value, and do not type the angle brackets.
+- Dates and times use `d/M/yyyy HHmm`, with a 24-hour clock. For example, `2/12/2026 1800` means 2 December 2026 at 6:00 PM.
+- Use the markers exactly as shown: `/by`, `/from`, and `/to`. Do not insert spaces inside them or change their spelling.
+- A deadline needs one `/by` marker. An event needs both `/from` and `/to`, in that order. Include a description before the marker.
+- Separate the command and its arguments with spaces, but do not add extra characters or punctuation to the command names or markers.
+
+## Command summary
+
+| Command | Purpose |
+| --- | --- |
+| `todo <description>` | Add a todo task. |
+| `deadline <description> /by <date and time>` | Add a task with a deadline. |
+| `event <description> /from <date and time> /to <date and time>` | Add an event with a start and end time. |
+| `list` | Display all tasks, their numbers, types, and completion status. |
+| `mark <task number>` | Mark a task as completed. |
+| `unmark <task number>` | Mark a task as incomplete. |
+| `delete <task number>` | Delete a task. |
+| `events-on <date>` | Show deadlines and events on a specific date. |
+| `help` | Display Judey's built-in command guide. |
+| `bye` | Exit Judey. |
+
+## Command details
+
+### Add tasks
+
+| Command | What it does | Example |
+| --- | --- | --- |
+| `todo <description>` | Adds a task with no date. | `todo read a book` |
+| `deadline <description> /by <date and time>` | Adds a task with a due date. | `deadline submit report /by 2/12/2026 2359` |
+| `event <description> /from <date and time> /to <date and time>` | Adds a task with a start and end time. | `event team meeting /from 15/10/2026 1400 /to 15/10/2026 1600` |
+
+For dates and times, use `d/M/yyyy HHmm` format:
+
+```text
+2/12/2026 1800
+```
+
+The time uses 24-hour notation. For example, `1800` means 6:00 PM.
+
+### Manage tasks
+
+- `list` — shows every task, its number, completion status, and task type. The type tag is `[T]` for a todo, `[D]` for a deadline, and `[E]` for an event. An incomplete task has `[ ]`; a completed task has `[X]`.
+- `mark <task number>` — marks a task as done. When you run `list`, its status changes to `[X]`. Example: `mark 1`
+- `unmark <task number>` — marks a completed task as incomplete again. When you run `list`, its status changes back to `[ ]`. Example: `unmark 1`
+- `delete <task number>` — permanently removes the selected task from the list. Example: `delete 1`
+
+For example, this `list` output means task 1 is an incomplete todo, task 2 is a completed deadline, and task 3 is an incomplete event:
+
+```text
+1.[T][ ] buy groceries
+2.[D][X] submit assignment (by: Sep 25 2026, 11:59PM)
+3.[E][ ] project meeting (from: Sep 26 2026, 2:00PM to Sep 26 2026, 3:00PM)
+```
+
+### Find events by date
+
+Use `events-on <date>` to show events occurring on a particular date. The date must use `d/M/yyyy` format:
+
+```text
+events-on 2/12/2026
+```
+
+### The `help` command
+
+Enter `help` when you need a reminder of the available commands. Judey displays the command groups, expected formats, and examples for adding, managing, and filtering tasks. Use the examples as templates: replace values such as `<description>` and `<task number>` with your own information, but keep the command names and `/by`, `/from`, and `/to` markers unchanged.
+
+`help` does not change your task list and does not accept extra text. Enter only:
+
+```text
+help
+```
+
+### The `bye` command
+
+Enter `bye` when you are finished. Judey displays a goodbye message and closes the application.
+
+Tasks that you added or changed during the session are saved automatically as each command is completed. They remain in `data/judey.txt` and will be loaded the next time you start Judey from the same folder.
+
+```text
+bye
+```
+
+## Common problems
+
+| Problem | What to do |
+| --- | --- |
+| Judey does not start | Check that JDK 25 is installed, that your terminal is open in the folder containing `judey.jar`, and that you ran `java -jar judey.jar`. |
+| A command is not recognised | Commands are case-sensitive. Use the lowercase command names shown in this guide, such as `todo` or `list`. |
+| A date or time is rejected | Use `d/M/yyyy HHmm`, such as `25/9/2026 2359`, and use a 24-hour clock. |
+| An event or deadline is rejected | Check that the description is present and that you used the markers exactly as `/by`, `/from`, and `/to`. Do not type the angle brackets from the examples. |
+| A task number is rejected | Run `list` and use the current number shown beside the task. Task numbers start at 1. |
+| The task list is empty | Add a task first, then run `list`. If previously saved tasks are missing, make sure you started Judey from the same folder as before so it can find `data/judey.txt`. |
+| An error message is unclear | In the GUI, the highlighted part of the suggested command identifies the value that is missing or incorrect. Replace that part and submit the command again. |
+
+## Tips
+
+- Use `list` before `mark`, `unmark`, or `delete` if you are unsure of a task number.
+- If a command is invalid or missing information, Judey shows an example of the expected format. In the GUI, the highlighted part of that example shows what was wrong or missing. Correct that part and try again.
+- Keep the `/by`, `/from`, and `/to` markers exactly as shown in the examples.
