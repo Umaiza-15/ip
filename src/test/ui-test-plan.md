@@ -1,5 +1,12 @@
 # Console UI test plan
 
+## Personality update expectations
+
+The welcome and command responses should use Judey's playful astronaut-cat personality. In particular, the
+welcome output must include `Meowdy! I'm Judey, your astronaut cat assistant.`, successful task creation must
+include `Purrfect!`, and goodbye must include `Bye for now, space cadet!`. Existing task data, command syntax,
+and validation behavior remain unchanged.
+
 ## Test environment
 
 - Compile command: `javac -d out src/main/java/*.java`

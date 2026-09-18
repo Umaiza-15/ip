@@ -33,14 +33,16 @@ public class Ui {
                 + "JJ JJ   uu   uu  dd   dd  ee         yyy\n"
                 + " JJJ     uuuu u  dddddd   eeeeeee    yyy";
         System.out.println(banner + "\n");
-        System.out.println("Hello! I'm Judey.\nWhat can I do for you?");
+        System.out.println("Meowdy! I'm Judey, your astronaut cat assistant.\n"
+                + "Ready to launch your tasks into orbit?");
         showLine();
     }
 
     /** Prints the available commands and examples for using Judey. */
     public void showHelp() {
         showLine();
-        System.out.println("Judey Help\n");
+        System.out.println("Judey's Space-Cat Command Deck\n");
+        System.out.println("Use these commands to keep your missions purrfectly organized.\n");
         System.out.println("Creating tasks:");
         System.out.println("  todo <description>\n    Example: todo read book\n");
         System.out.println("  deadline <description> /by <date and time>\n"
@@ -63,7 +65,7 @@ public class Ui {
     /** Prints the farewell message. */
     public void showGoodbye() {
         showLine();
-        System.out.println("Bye. Hope to see you again soon!");
+        System.out.println("Bye for now, space cadet! Keep your tasks purrfectly organized.");
         showLine();
     }
 
@@ -77,24 +79,24 @@ public class Ui {
     /** Prints an error message when storage fails to load data. */
     public void showLoadingError() {
         showLine();
-        System.out.println("Warning: Could not load saved tasks. Starting with an empty task list.");
+        System.out.println("Warning: Mission control could not load your tasks. Starting with an empty log.");
         showLine();
     }
 
     /** Prints confirmation after a task is added. */
     public void showTaskAdded(Task task, int taskCount) {
         showLine();
-        System.out.println("Got it. I've added this task \n  " + task);
-        System.out.println("Now you have " + taskCount + " tasks in this list.\n");
+        System.out.println("Purrfect! I've launched this task into your mission log:\n  " + task);
+        System.out.println("You now have " + taskCount + " tasks in orbit.\n");
         showLine();
     }
 
     /** Prints confirmation after a task is removed. */
     public void showTaskDeleted(Task task, int taskCount) {
         showLine();
-        System.out.println("Ok. I've removed this task:");
+        System.out.println("Mission control confirms: this task has been removed:");
         System.out.print("  " + task);
-        System.out.println("Now you have " + taskCount + " tasks in the list.");
+        System.out.println("You now have " + taskCount + " tasks in orbit.");
         showLine();
     }
 
@@ -102,9 +104,9 @@ public class Ui {
     public void showTaskStatusChanged(Task task, boolean isDone) {
         showLine();
         if (isDone) {
-            System.out.println("Nice! I've marked this task as done: \n  " + task);
+            System.out.println("Purrfect! I've marked this task complete and ready for re-entry:\n  " + task);
         } else {
-            System.out.println("OK, I've marked this task as not done yet: \n  " + task);
+            System.out.println("This task is back on the active mission list:\n  " + task);
         }
         showLine();
     }

@@ -107,7 +107,7 @@ public class TaskList {
      * Prints all tasks in the list sequentially with 1-based index numbering
      */
     public void printList() {
-        System.out.println("Here are the tasks in your list: ");
+        System.out.println("Here are the tasks currently orbiting your mission log:");
         for (int index = 0; index < tasks.size(); index++) {
             System.out.print((index + 1) + "." + tasks.get(index));
         }
@@ -121,7 +121,7 @@ public class TaskList {
      * @param searchDate The target date to search for tasks
      */
     public void printTasksOnDate(LocalDate searchDate) {
-        System.out.println("Tasks on " + searchDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy")) + ":");
+        System.out.println("Mission tasks on " + searchDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy")) + ":");
         int count = 0;
         for (Task task : tasks) {
             boolean match = false;
@@ -137,7 +137,7 @@ public class TaskList {
             }
         }
         if (count == 0) {
-            System.out.println(" No deadlines or events found on this date.");
+            System.out.println(" No deadlines or events found in this orbit.");
         }
     }
 
@@ -147,7 +147,7 @@ public class TaskList {
      * @param keyword search term to query against descriptions
      */
     public void findTasks(String keyword) {
-        System.out.println("Here are the matching tasks in your list:");
+        System.out.println("Here are the matching tasks in your mission log:");
         int matchCount = 0;
         for (Task task : tasks) {
             if (task.getDescription().toLowerCase().contains(keyword.toLowerCase())) {
@@ -156,7 +156,7 @@ public class TaskList {
             }
         }
         if (matchCount == 0) {
-            System.out.println("No matching tasks found.");
+            System.out.println("No matching tasks found in this sector.");
         }
     }
 }

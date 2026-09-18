@@ -1,32 +1,46 @@
 .label {
-    -fx-background-color: linear-gradient(to bottom right, #00ffbf, #00ddff);
-    -fx-border-color: #d55e00 #009e73 #cc79a7 #0072b2;
+    -fx-background-color: linear-gradient(to bottom right, #5dcdcb, #7bc1e4);
+    -fx-border-color: #7bc1e4;
     -fx-border-width: 2px;
-    -fx-background-radius: 1em 1em 0 1em;
-    -fx-border-radius: 1em 1em 0 1em;
+    -fx-background-radius: 8px 0 0 8px;
+    -fx-border-radius: 8px 0 0 8px;
+    -fx-text-fill: #101d3b;
+    -fx-font-family: "Consolas", "Menlo", "Courier New", monospace;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(123, 193, 228, 0.55), 8, 0.3, 0, 0);
 }
 
 .banner-label {
     -fx-border-width: 2px;
-    -fx-background-radius: 18px 18px 18px 4px;
-    -fx-border-radius: 18px 18px 18px 4px;
+    -fx-background-color: #5dcdcb;
+    -fx-border-color: #f2a23e;
+    -fx-background-radius: 5px 14px 14px 5px;
+    -fx-border-radius: 5px 14px 14px 5px;
     -fx-font-family: "Consolas", "Menlo", "Courier New", monospace;
     -fx-font-size: 13px;
     -fx-font-weight: bold;
-    -fx-effect: dropshadow(gaussian, rgba(92, 59, 19, 0.22), 8, 0.25, 0, 3);
+    -fx-effect: dropshadow(gaussian, rgba(242, 162, 62, 0.55), 8, 0.3, 0, 0);
 }
 
 .help-label {
-    -fx-background-radius: 18px 18px 18px 4px;
-    -fx-border-radius: 18px 18px 18px 4px;
+    -fx-background-color: #f2f2e8;
+    -fx-border-color: #5dcdcb;
+    -fx-text-fill: #32527f;
+    -fx-background-radius: 5px 14px 14px 5px;
+    -fx-border-radius: 5px 14px 14px 5px;
     -fx-font-family: "Consolas", "Menlo", "Courier New", monospace;
     -fx-font-size: 12px;
+    -fx-font-weight: bold;
     -fx-padding: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(93, 205, 203, 0.45), 8, 0.3, 0, 0);
 }
 
 .reply-label {
-    -fx-background-radius: 1em 1em 1em 0;
-    -fx-border-radius: 1em 1em 1em 0;
+    -fx-background-color: linear-gradient(to bottom right, #7bc1e4, #f2a23e);
+    -fx-background-radius: 0 8px 8px 0;
+    -fx-border-radius: 0 8px 8px 0;
+    -fx-border-color: #5dcdcb;
+    -fx-effect: dropshadow(gaussian, rgba(93, 205, 203, 0.55), 8, 0.3, 0, 0);
 }
 
 #displayPicture {

@@ -1,5 +1,8 @@
 # Judey User Guide
 
+Judey is a playful astronaut-cat assistant for keeping your tasks in orbit.
+The interface uses a dark space theme with neon Japan-night-city accents.
+
 ## Getting help
 
 Enter `help` to display all available commands and syntax examples. The command does not accept arguments.
