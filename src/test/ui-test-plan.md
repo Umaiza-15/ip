@@ -43,6 +43,27 @@ Bye. Hope to see you again soon!
 ----------------------------------------
 ```
 
+## GUI error highlighting
+
+Manually verify that the original user command remains unchanged in the user bubble and that the GUI displays the
+correction in the red error bubble. For `event`, the correction must use `<start date and start time>` and
+`<end date and end time>`, with the first missing placeholder highlighted.
+
+Input:
+
+```text
+event
+```
+
+Expected correction text:
+
+```text
+The event is missing a description, start date and start time, and end date and end time.
+
+Try:
+event <description> /from <start date and start time: d/M/yyyy HHmm> /to <end date and end time: d/M/yyyy HHmm>
+```
+
 ## Test case: Display help
 
 ### Aim
@@ -81,7 +102,8 @@ Creating tasks:
     Example: deadline submit report /by 2026-12-31 2359
 
   event <description> /from <date and time> /to <date and time>
-    Example: event team meeting /from 2026-10-15 1400 /to 2026-10-15 1600
+    Format: d/M/yyyy HHmm
+    Example: event team meeting /from 15/10/2026 1400 /to 15/10/2026 1600
 
 Managing tasks:
   list

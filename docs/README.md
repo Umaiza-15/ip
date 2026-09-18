@@ -30,3 +30,16 @@ Enter `help` to display all available commands and syntax examples. The command 
 
 - `help` — display this guide.
 - `bye` — exit Judey.
+
+## Error guidance
+
+In the GUI, invalid commands remain visible in the original user-message bubble. Judey then shows a red error bubble
+with a correction template. The first missing or invalid placeholder is highlighted. For example, entering `event`
+shows:
+
+```text
+event <description> /from <start date and start time: d/M/yyyy HHmm> /to <end date and end time: d/M/yyyy HHmm>
+```
+
+The command syntax and stored task format are unchanged. Invalid commands are not saved. The command-line interface
+continues to display plain-text errors without GUI highlighting.

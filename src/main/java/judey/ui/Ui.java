@@ -1,6 +1,7 @@
 package judey.ui;
 
 import judey.task.Task;
+import judey.parser.Parser;
 
 import java.util.List;
 import java.util.Scanner;
@@ -48,7 +49,8 @@ public class Ui {
         System.out.println("  deadline <description> /by <date and time>\n"
                 + "    Example: deadline submit report /by 2026-12-31 2359\n");
         System.out.println("  event <description> /from <date and time> /to <date and time>\n"
-                + "    Example: event team meeting /from 2026-10-15 1400 /to 2026-10-15 1600\n");
+                + "    Format: d/M/yyyy HHmm\n"
+                + "    Example: event team meeting /from 15/10/2026 1400 /to 15/10/2026 1600\n");
         System.out.println("Managing tasks:");
         System.out.println("  list\n    Example: list\n");
         System.out.println("  mark <task number>\n    Example: mark 1\n");
@@ -71,9 +73,22 @@ public class Ui {
 
     /** Prints a user-facing error message. */
     public void showError(String message) {
+        showErrorMessage(stripHighlightMarkers(message));
+    }
+
+    /** Prints an error while preserving GUI-only highlight markers. */
+    public void showErrorWithMarkup(String message) {
+        showErrorMessage(message);
+    }
+
+    private void showErrorMessage(String message) {
         showLine();
         System.out.println("Oopsie! " + message);
         showLine();
+    }
+
+    private String stripHighlightMarkers(String message) {
+        return message.replace(Parser.HIGHLIGHT_START, "").replace(Parser.HIGHLIGHT_END, "");
     }
 
     /** Prints an error message when storage fails to load data. */

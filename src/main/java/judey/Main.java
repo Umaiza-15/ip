@@ -24,6 +24,8 @@ public class Main extends Application {
             Scene scene = new Scene(ap);
             stage.setScene(scene);
             stage.setTitle("Judey");
+            stage.setWidth(500);
+            stage.setHeight(700);
             stage.setMinHeight(220);
             stage.setMinWidth(417);
             fxmlLoader.<MainWindow>getController().setJudey(judey);  // inject the Judey instance

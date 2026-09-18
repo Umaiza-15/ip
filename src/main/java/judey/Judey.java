@@ -72,7 +72,7 @@ public class Judey {
             Command c = Parser.parse(input);
             c.execute(tasks, ui, storage);
         } catch (JudeyException e) {
-            ui.showError(e.getMessage());
+            ui.showErrorWithMarkup(e.getMessage());
         } finally {
             System.setOut(originalOut);
         }

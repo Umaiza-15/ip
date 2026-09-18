@@ -17,7 +17,11 @@ import judey.command.MarkCommand;
 import judey.exception.JudeyException;
 
 public class Parser {
+    public static final String HIGHLIGHT_START = "[[highlight]]";
+    public static final String HIGHLIGHT_END = "[[/highlight]]";
     private static final DateTimeFormatter EVENTS_ON_DATE_FORMAT = DateTimeFormatter.ofPattern("d/M/yyyy");
+    private static final String EVENT_START_FORMAT = "<start date and start time: d/M/yyyy HHmm>";
+    private static final String EVENT_END_FORMAT = "<end date and end time: d/M/yyyy HHmm>";
 
     public static Command parse(String fullCommand) throws JudeyException {
         String[] parts = fullCommand.trim().split("\\s+", 2);
@@ -56,35 +60,52 @@ public class Parser {
 
     private static Command parseTodo(String args) throws JudeyException {
         if (args.isBlank()) {
-            throw new JudeyException("Your todo is missing its mission! Try: todo read book");
+            throw new JudeyException("The todo is missing a description.\n\nTry:\ntodo "
+                    + highlight("<description>"));
         }
         return new AddTodoCommand(args.trim());
     }
 
     private static Command parseDeadline(String args) throws JudeyException {
-        String usage = "That deadline needs a date! Try: deadline report /by 2/12/2019 1800";
         if (args.isBlank()) {
-            throw new JudeyException(usage);
+            throw new JudeyException("The deadline is missing a description and due date.\n\nTry:\ndeadline "
+                    + highlight("<description>") + " /by <date and time>");
         }
         String[] deadlineParts = args.split("\\s*/by\\s*", 2);
         if (deadlineParts.length < 2 || deadlineParts[0].isBlank() || deadlineParts[1].isBlank()) {
-            throw new JudeyException(usage);
+            String description = deadlineParts[0].isBlank() ? highlight("<description>") : deadlineParts[0].trim();
+            String dueDate = deadlineParts.length < 2 || deadlineParts[1].isBlank()
+                    ? highlight("<date and time>") : deadlineParts[1].trim();
+            throw new JudeyException("The deadline is missing a required value.\n\nTry:\ndeadline "
+                    + description + " /by " + dueDate);
         }
         return new AddDeadlineCommand(deadlineParts[0].trim(), deadlineParts[1].trim());
     }
 
     private static Command parseEvent(String args) throws JudeyException {
-        String usage = "That event needs a name, /from time, and /to time to get on my calendar.";
         if (args.isBlank()) {
-            throw new JudeyException(usage);
+            throw new JudeyException("The event is missing a description, start date and start time, and "
+                    + "end date and end time.\n\nTry:\nevent " + highlight("<description>")
+                    + " /from " + EVENT_START_FORMAT + " /to " + EVENT_END_FORMAT);
         }
         String[] descAndFrom = args.split("\\s*/from\\s*", 2);
-        if (descAndFrom.length < 2 || descAndFrom[0].isBlank()) {
-            throw new JudeyException(usage);
+        if (descAndFrom[0].isBlank()) {
+            throw new JudeyException("The event is missing a description or start time.\n\nTry:\nevent "
+                    + highlight("<description>") + " /from " + EVENT_START_FORMAT
+                    + " /to " + EVENT_END_FORMAT);
+        }
+        if (descAndFrom.length < 2) {
+            throw new JudeyException("The event is missing a start time.\n\nTry:\nevent "
+                    + descAndFrom[0].trim() + " /from " + highlight(EVENT_START_FORMAT)
+                    + " /to " + EVENT_END_FORMAT);
         }
         String[] fromAndTo = descAndFrom[1].split("\\s*/to\\s*", 2);
         if (fromAndTo.length < 2 || fromAndTo[0].isBlank() || fromAndTo[1].isBlank()) {
-            throw new JudeyException(usage);
+            String from = fromAndTo[0].isBlank() ? highlight(EVENT_START_FORMAT) : fromAndTo[0].trim();
+            String to = fromAndTo.length < 2 || fromAndTo[1].isBlank()
+                    ? highlight(EVENT_END_FORMAT) : fromAndTo[1].trim();
+            throw new JudeyException("The event is missing a required value.\n\nTry:\nevent "
+                    + descAndFrom[0].trim() + " /from " + from + " /to " + to);
         }
         return new AddEventCommand(descAndFrom[0].trim(), fromAndTo[0].trim(), fromAndTo[1].trim());
     }
@@ -111,5 +132,9 @@ public class Parser {
             throw new JudeyException("Task numbers are whole numbers only; "
                     + "no decimals or letters this time!");
         }
+    }
+
+    private static String highlight(String placeholder) {
+        return HIGHLIGHT_START + placeholder + HIGHLIGHT_END;
     }
 }

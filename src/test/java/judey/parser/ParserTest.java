@@ -51,7 +51,9 @@ public class ParserTest {
                 JudeyException.class,
                 () -> Parser.parse("todo")
         );
-        assertEquals("Your todo is missing its mission! Try: todo read book", exception.getMessage());
+        assertTrue(exception.getMessage().contains("The todo is missing a description."));
+        assertTrue(exception.getMessage().contains(Parser.HIGHLIGHT_START + "<description>"
+                + Parser.HIGHLIGHT_END));
     }
 
     @Test
@@ -75,7 +77,7 @@ public class ParserTest {
                 JudeyException.class,
                 () -> Parser.parse("deadline /by 2026-12-31 2359")
         );
-        assertEquals("That deadline needs a date! Try: deadline report /by 2/12/2019 1800", exception.getMessage());
+        assertTrue(exception.getMessage().contains("The deadline is missing a required value."));
     }
 
     @Test
@@ -84,7 +86,7 @@ public class ParserTest {
                 JudeyException.class,
                 () -> Parser.parse("deadline submit assignment")
         );
-        assertEquals("That deadline needs a date! Try: deadline report /by 2/12/2019 1800", exception.getMessage());
+        assertTrue(exception.getMessage().contains("The deadline is missing a required value."));
     }
 
     @Test
@@ -93,7 +95,7 @@ public class ParserTest {
                 JudeyException.class,
                 () -> Parser.parse("deadline submit assignment /by ")
         );
-        assertEquals("That deadline needs a date! Try: deadline report /by 2/12/2019 1800", exception.getMessage());
+        assertTrue(exception.getMessage().contains("The deadline is missing a required value."));
     }
 
     @Test
@@ -117,7 +119,7 @@ public class ParserTest {
                 JudeyException.class,
                 () -> Parser.parse("event /from 2026-10-15 1400 /to 2026-10-15 1600")
         );
-        assertEquals("That event needs a name, /from time, and /to time to get on my calendar.", exception.getMessage());
+        assertTrue(exception.getMessage().contains("The event is missing a description or start time."));
     }
 
     @Test
@@ -126,7 +128,7 @@ public class ParserTest {
                 JudeyException.class,
                 () -> Parser.parse("event team meeting /from 2026-10-15 1400")
         );
-        assertEquals( "That event needs a name, /from time, and /to time to get on my calendar.", exception.getMessage());
+        assertTrue(exception.getMessage().contains("The event is missing a required value."));
     }
 
     @Test
@@ -144,5 +146,34 @@ public class ParserTest {
                 JudeyException.class,
                 () -> Parser.parse("event team meeting /from  /to 2026-10-15 1600")
         );
+    }
+
+    @Test
+    public void parseCommand_eventMissingAllArguments_highlightsDescriptionFirst() {
+        JudeyException exception = assertThrows(JudeyException.class, () -> Parser.parse("event"));
+
+        assertTrue(exception.getMessage().contains("<start date and start time: d/M/yyyy HHmm>"));
+        assertTrue(exception.getMessage().contains("<end date and end time: d/M/yyyy HHmm>"));
+        assertTrue(exception.getMessage().contains(Parser.HIGHLIGHT_START + "<description>"
+                + Parser.HIGHLIGHT_END));
+    }
+
+    @Test
+    public void parseCommand_eventMissingEnd_highlightsEndDateAndTime() {
+        JudeyException exception = assertThrows(
+                JudeyException.class,
+                () -> Parser.parse("event team meeting /from 15/10/2026 1400")
+        );
+
+        assertTrue(exception.getMessage().contains(Parser.HIGHLIGHT_START
+                + "<end date and end time: d/M/yyyy HHmm>" + Parser.HIGHLIGHT_END));
+    }
+
+    @Test
+    public void parseCommand_eventMissingFrom_highlightsStartDateAndTime() {
+        JudeyException exception = assertThrows(JudeyException.class, () -> Parser.parse("event read"));
+
+        assertTrue(exception.getMessage().contains(Parser.HIGHLIGHT_START
+                + "<start date and start time: d/M/yyyy HHmm>" + Parser.HIGHLIGHT_END));
     }
 }
