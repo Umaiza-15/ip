@@ -24,6 +24,9 @@ public class Event extends Task {
         super(desc);
         this.from = DateTimeUtil.parse(from);
         this.to = DateTimeUtil.parse(to);
+        assert this.from != null && this.to != null
+                : "parseDateTime() either returns a valid LocalDateTime or throws JudeyException; 'from' and 'to' "
+                + "should never be null once this constructor completes successfully";
     }
 
     /**

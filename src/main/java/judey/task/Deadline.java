@@ -19,6 +19,9 @@ public class Deadline extends Task {
     public Deadline(String desc, String by) throws JudeyException {
         super(desc);
         this.by = DateTimeUtil.parse(by);
+        assert this.by != null
+                : "parseDateTime() either returns a valid LocalDateTime or throws JudeyException; it should never "
+                + "leave 'by' as null once this constructor completes successfully";
     }
 
     /**
