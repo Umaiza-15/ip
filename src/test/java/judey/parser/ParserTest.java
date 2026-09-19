@@ -25,6 +25,13 @@ public class ParserTest {
     }
 
     @Test
+    public void parseCommand_listWithArguments_exceptionThrown() {
+        JudeyException exception = assertThrows(JudeyException.class,
+                () -> Parser.parse("list extra"));
+        assertEquals("The list command does not take any arguments. Try: list", exception.getMessage());
+    }
+
+    @Test
     public void parseCommand_help_returnsHelpCommand() throws Exception {
         Command command = Parser.parse("   help   ");
         assertInstanceOf(HelpCommand.class, command);

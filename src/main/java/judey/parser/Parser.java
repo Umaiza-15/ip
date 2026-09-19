@@ -38,6 +38,9 @@ public class Parser {
                 }
                 return new HelpCommand();
             case "list":
+                if (!args.isBlank()) {
+                    throw new JudeyException("The list command does not take any arguments. Try: list");
+                }
                 return new ListCommand();
             case "todo":
                 return parseTodo(args);

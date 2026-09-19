@@ -50,8 +50,9 @@
 }
 
 .error-label {
-    -fx-background-color: #f2f2e8;
-    -fx-border-color: #e53528;
+    -fx-background-color: linear-gradient(to bottom right, #7bc1e4, #f2a23e);
+    -fx-border-color: #A01A7D;
+    -fx-border-width: 2px;
     -fx-background-radius: 0 8px 8px 0;
     -fx-border-radius: 0 8px 8px 0;
     -fx-padding: 10px;

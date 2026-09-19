@@ -37,13 +37,17 @@
     -fx-font-size: 20px;
 }
 
-.starfield {
-    -fx-effect: dropshadow(gaussian, rgba(93, 205, 203, 0.2), 8, 0.2, 0, 0);
-}
-
 .scroll-pane,
 .scroll-pane .viewport {
     -fx-background-color: transparent;
+}
+
+.starfield {
+    -fx-background-image: url("../images/starfield.png");
+    -fx-background-repeat: repeat;
+    -fx-background-position: 0 0;
+    -fx-background-size: auto;
+    -fx-effect: dropshadow(gaussian, rgba(93, 205, 203, 0.2), 8, 0.2, 0, 0);
 }
 
 .scroll-bar {

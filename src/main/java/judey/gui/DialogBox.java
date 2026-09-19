@@ -22,6 +22,7 @@ import javafx.scene.text.TextFlow;
  * and a text flow containing text from the speaker.
  */
 public class DialogBox extends HBox {
+    private static final String CONSOLE_DIVIDER = "----------------------------------------";
     @FXML
     private StackPane dialogContainer;
     @FXML
@@ -31,7 +32,7 @@ public class DialogBox extends HBox {
     @FXML
     private ImageView displayPicture;
 
-    private DialogBox(String text, Image img) {
+    private DialogBox(String text, Image img, boolean judeyMessage) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/DialogBox.fxml"));
             fxmlLoader.setController(this);
@@ -41,16 +42,39 @@ public class DialogBox extends HBox {
             e.printStackTrace();
         }
 
-        if (text.contains("[[highlight]]")) {
-            setRichDialogText(text);
+        String displayedText = judeyMessage ? frameWithDividers(text) : text;
+        if (displayedText.contains("[[highlight]]")) {
+            setRichDialogText(displayedText);
             plainDialog.setVisible(false);
             plainDialog.setManaged(false);
         } else {
-            plainDialog.setText(text);
+            plainDialog.setText(displayedText);
             richDialog.setVisible(false);
             richDialog.setManaged(false);
         }
         displayPicture.setImage(img);
+    }
+
+    /** Gives every Judey GUI response one fixed divider line above and below its text. */
+    static String frameWithDividers(String text) {
+        String result = stripOuterDividers(text);
+        return CONSOLE_DIVIDER + "\n" + result + "\n" + CONSOLE_DIVIDER;
+    }
+
+    /** Checks an unstyled GUI response without being affected by its divider wrapper. */
+    static boolean isErrorResponse(String text) {
+        return stripOuterDividers(text).startsWith("Oopsie!");
+    }
+
+    private static String stripOuterDividers(String text) {
+        String result = text.trim();
+        if (result.startsWith(CONSOLE_DIVIDER)) {
+            result = result.substring(CONSOLE_DIVIDER.length()).stripLeading();
+        }
+        if (result.endsWith(CONSOLE_DIVIDER)) {
+            result = result.substring(0, result.length() - CONSOLE_DIVIDER.length()).stripTrailing();
+        }
+        return result;
     }
 
     private void setRichDialogText(String text) {
@@ -98,11 +122,11 @@ public class DialogBox extends HBox {
     }
 
     public static DialogBox getUserDialog(String text, Image img) {
-        return new DialogBox(text, img);
+        return new DialogBox(text, img, false);
     }
 
     public static DialogBox getDukeDialog(String text, Image img) {
-        var db = new DialogBox(text, img);
+        var db = new DialogBox(text, img, true);
         db.flip();
         return db;
     }

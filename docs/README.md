@@ -38,6 +38,10 @@ To get started:
 
 The Judey window will open with a chat box for entering commands. Your tasks will be saved in a `data` subfolder as `data/judey.txt`.
 
+The GUI background uses a repeating starfield so it fills the window when you resize it. Every Judey response is framed
+by the existing fixed-length divider line above and below its text. These visual changes do not affect command syntax,
+task storage, or command-line output.
+
 Your tasks are saved automatically in `data/judey.txt`, so they will still be available the next time you start Judey from the same folder.
 
 ## Using Judey

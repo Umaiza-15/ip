@@ -58,7 +58,7 @@ public class MainWindow extends AnchorPane {
         dialogContainer.getChildren().add(DialogBox.getUserDialog(input, userImage));
         if (input.trim().equals("help")) {
             dialogContainer.getChildren().add(DialogBox.getHelpDialog(response, dukeImage));
-        } else if (response.startsWith("Oopsie!")) {
+        } else if (DialogBox.isErrorResponse(response)) {
             dialogContainer.getChildren().add(DialogBox.getErrorDialog(response, dukeImage));
         } else {
             dialogContainer.getChildren().add(DialogBox.getDukeDialog(response, dukeImage));

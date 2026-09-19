@@ -13,6 +13,22 @@ and validation behavior remain unchanged.
 - Run command: `java -cp out Judey`
 - The `test-ui` skill compiles with Java 25 before each session.
 
+## GUI visual verification
+
+The following checks require launching the JavaFX GUI manually. They are intentionally separate from the console
+transcripts because the starfield and dividers are visual layout behavior.
+
+### Starfield and conversation dividers
+
+1. Launch the GUI at its default size and confirm the starfield fills the entire background without stretching.
+2. Resize the window to a wide shape, a tall shape, and the minimum supported size. Confirm that the starfield repeats
+   horizontally and vertically without blank areas.
+3. Confirm that the input controls and all dialog text remain above the starfield and readable.
+4. Confirm that the welcome banner has one fixed-length divider line above and below its text.
+5. Submit a valid command, an invalid command, `help`, and a command producing a multi-line response. Confirm that
+   every Judey response has exactly one fixed-length divider line above and below its text.
+6. Confirm that user messages have no divider lines and retain their original bubble styling.
+
 ## Test case: Exit politely
 
 ### Aim
