@@ -57,6 +57,30 @@ public class ParserTest {
     }
 
     @Test
+    public void parseCommand_markMissingTaskNumber_highlightsTaskNumber() {
+        JudeyException exception = assertThrows(JudeyException.class, () -> Parser.parse("mark"));
+
+        assertEquals("The mark command is missing a task number.\n\nTry: mark "
+                + Parser.HIGHLIGHT_START + "<task number>" + Parser.HIGHLIGHT_END, exception.getMessage());
+    }
+
+    @Test
+    public void parseCommand_unmarkInvalidTaskNumber_highlightsTaskNumber() {
+        JudeyException exception = assertThrows(JudeyException.class, () -> Parser.parse("unmark nope"));
+
+        assertEquals("The unmark command requires a valid task number.\n\nTry: unmark "
+                + Parser.HIGHLIGHT_START + "<task number>" + Parser.HIGHLIGHT_END, exception.getMessage());
+    }
+
+    @Test
+    public void parseCommand_deleteExtraArguments_highlightsTaskNumber() {
+        JudeyException exception = assertThrows(JudeyException.class, () -> Parser.parse("delete 1 extra"));
+
+        assertEquals("The delete command requires a valid task number.\n\nTry: delete "
+                + Parser.HIGHLIGHT_START + "<task number>" + Parser.HIGHLIGHT_END, exception.getMessage());
+    }
+
+    @Test
     public void parseCommand_todoWithDescription_returnsAddCommand() throws Exception {
         Command command = Parser.parse("todo read book");
         assertInstanceOf(AddTodoCommand.class, command);
@@ -192,5 +216,32 @@ public class ParserTest {
 
         assertTrue(exception.getMessage().contains(Parser.HIGHLIGHT_START
                 + "<start date and start time: d/M/yyyy HHmm>" + Parser.HIGHLIGHT_END));
+    }
+
+    @Test
+    public void parseCommand_eventsOnMissingDate_highlightsDate() {
+        JudeyException exception = assertThrows(JudeyException.class, () -> Parser.parse("events-on"));
+
+        assertEquals("The events-on command is missing a date.\n\nTry: events-on "
+                + Parser.HIGHLIGHT_START + "<date: d/M/yyyy>" + Parser.HIGHLIGHT_END, exception.getMessage());
+    }
+
+    @Test
+    public void parseCommand_eventsOnInvalidDate_highlightsDate() {
+        JudeyException exception = assertThrows(
+                JudeyException.class,
+                () -> Parser.parse("events-on tomorrow")
+        );
+
+        assertEquals("The events-on command requires a valid date.\n\nTry: events-on "
+                + Parser.HIGHLIGHT_START + "<date: d/M/yyyy>" + Parser.HIGHLIGHT_END, exception.getMessage());
+    }
+
+    @Test
+    public void parseCommand_markNonPositiveTaskNumber_highlightsTaskNumber() {
+        JudeyException exception = assertThrows(JudeyException.class, () -> Parser.parse("mark 0"));
+
+        assertTrue(exception.getMessage().contains(Parser.HIGHLIGHT_START + "<task number>"
+                + Parser.HIGHLIGHT_END));
     }
 }

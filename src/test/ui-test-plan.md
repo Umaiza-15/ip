@@ -48,6 +48,8 @@ Bye. Hope to see you again soon!
 Manually verify that the original user command remains unchanged in the user bubble and that the GUI displays the
 correction in the red error bubble. For `event`, the correction must use `<start date and start time>` and
 `<end date and end time>`, with the first missing placeholder highlighted.
+For `mark`, `unmark`, and `delete`, missing or invalid task numbers must highlight `<task number>`. For
+`events-on`, missing or invalid dates must highlight `<date: d/M/yyyy>`.
 
 Input:
 
@@ -62,6 +64,35 @@ The event is missing a description, start date and start time, and end date and 
 
 Try:
 event <description> /from <start date and start time: d/M/yyyy HHmm> /to <end date and end time: d/M/yyyy HHmm>
+```
+
+Expected correction texts for the newly validated commands:
+
+```text
+mark
+The mark command is missing a task number.
+
+Try: mark <task number>
+
+unmark nope
+The unmark command requires a valid task number.
+
+Try: unmark <task number>
+
+delete 1 extra
+The delete command requires a valid task number.
+
+Try: delete <task number>
+
+events-on
+The events-on command is missing a date.
+
+Try: events-on <date: d/M/yyyy>
+
+events-on tomorrow
+The events-on command requires a valid date.
+
+Try: events-on <date: d/M/yyyy>
 ```
 
 ## Test case: Display help
@@ -329,7 +360,9 @@ Now you have 1 tasks in this list.
 
 ----------------------------------------
 ----------------------------------------
-Oopsie! Task numbers are whole numbers only; no decimals or letters this time!
+Oopsie! The mark command requires a valid task number.
+
+Try: mark <task number>
 ----------------------------------------
 ----------------------------------------
 Nice! I've marked this task as done: 

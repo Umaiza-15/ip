@@ -50,11 +50,11 @@ public class Parser {
             case "find":
                 return parseFind(args);
             case "mark":
-                return new MarkCommand(parseIndex(args), true);
+                return new MarkCommand(parseIndex(args, "mark"), true);
             case "unmark":
-                return new MarkCommand(parseIndex(args), false);
+                return new MarkCommand(parseIndex(args, "unmark"), false);
             case "delete":
-                return new DeleteCommand(parseIndex(args));
+                return new DeleteCommand(parseIndex(args, "delete"));
             default:
                 throw new JudeyException("Hmm, that command is still a mystery to me. "
                         + "Try todo, deadline, event, list, events-on, find, mark, unmark, delete, help, or bye.");
@@ -115,13 +115,17 @@ public class Parser {
 
     private static Command parseEventsOn(String args) throws JudeyException {
         if (args.isBlank()) {
-            throw new JudeyException("Please supply a date! Try: events-on 2/12/2019");
+            throw new JudeyException("The events-on command is missing a date.\n\nTry: events-on "
+                    + highlight("<date: d/M/yyyy>"));
+        }
+        if (args.trim().split("\\s+").length != 1) {
+            throw invalidEventsOnDate();
         }
         try {
             LocalDate date = LocalDate.parse(args.trim(), EVENTS_ON_DATE_FORMAT);
             return new EventsOnCommand(date);
         } catch (DateTimeParseException e) {
-            throw new JudeyException("Invalid date format. Try: d/M/yyyy (e.g., 2/12/2019)");
+            throw invalidEventsOnDate();
         }
     }
 
@@ -133,16 +137,33 @@ public class Parser {
         return new FindCommand(args.trim());
     }
 
-    private static int parseIndex(String args) throws JudeyException {
+    private static int parseIndex(String args, String commandName) throws JudeyException {
         if (args.isBlank()) {
-            throw new JudeyException("I need a valid task number to perform that command.");
+            throw new JudeyException("The " + commandName + " command is missing a task number.\n\nTry: "
+                    + commandName + " " + highlight("<task number>"));
+        }
+        if (args.trim().split("\\s+").length != 1) {
+            throw invalidTaskNumber(commandName);
         }
         try {
-            return Integer.parseInt(args.trim()) - 1;
+            int taskNumber = Integer.parseInt(args.trim());
+            if (taskNumber <= 0) {
+                throw invalidTaskNumber(commandName);
+            }
+            return taskNumber - 1;
         } catch (NumberFormatException e) {
-            throw new JudeyException("Task numbers are whole numbers only; "
-                    + "no decimals or letters this time!");
+            throw invalidTaskNumber(commandName);
         }
+    }
+
+    private static JudeyException invalidTaskNumber(String commandName) {
+        return new JudeyException("The " + commandName + " command requires a valid task number.\n\nTry: "
+                + commandName + " " + highlight("<task number>"));
+    }
+
+    private static JudeyException invalidEventsOnDate() {
+        return new JudeyException("The events-on command requires a valid date.\n\nTry: events-on "
+                + highlight("<date: d/M/yyyy>"));
     }
 
     private static String highlight(String placeholder) {

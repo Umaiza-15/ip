@@ -118,7 +118,7 @@ For example, this `list` output means task 1 is an incomplete todo, task 2 is a 
 
 ### Find events by date
 
-Use `events-on <date>` to show events occurring on a particular date. The date must use `d/M/yyyy` format:
+Use `events-on <date: d/M/yyyy>` to show events occurring on a particular date. The date must use `d/M/yyyy` format:
 
 ```text
 events-on 2/12/2026
@@ -141,6 +141,30 @@ No matching tasks found in this sector.
 ```
 
 The search keyword is required. For example, entering only `find` displays an error with the correct format.
+
+### Missing or invalid command arguments
+
+The `mark`, `unmark`, `delete`, and `events-on` commands report missing or invalid arguments with a correction
+example. In the GUI, the missing or invalid value is highlighted in that example. For example, entering `mark`
+shows:
+
+```text
+The mark command is missing a task number.
+
+Try: mark <task number>
+```
+
+For `events-on`, the correction includes the required date format:
+
+```text
+The events-on command is missing a date.
+
+Try: events-on <date: d/M/yyyy>
+```
+
+The highlighting is GUI-only; the command-line interface displays the same correction without visual highlighting.
+Task numbers must be positive whole numbers. A positive number that is not present in the task list produces a
+separate task-not-found error.
 
 ### The `help` command
 
@@ -172,7 +196,7 @@ bye
 | An event or deadline is rejected | Check that the description is present and that you used the markers exactly as `/by`, `/from`, and `/to`. Do not type the angle brackets from the examples. |
 | A task number is rejected | Run `list` and use the current number shown beside the task. Task numbers start at 1. |
 | The task list is empty | Add a task first, then run `list`. If previously saved tasks are missing, make sure you started Judey from the same folder as before so it can find `data/judey.txt`. |
-| An error message is unclear | In the GUI, the highlighted part of the suggested command identifies the value that is missing or incorrect. Replace that part and submit the command again. |
+| An error message is unclear | For `mark`, `unmark`, `delete`, and `events-on`, the GUI highlights the value that is missing or incorrect in the suggested command. Replace that part and submit the command again. |
 
 ## Tips
 

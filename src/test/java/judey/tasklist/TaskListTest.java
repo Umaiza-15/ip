@@ -82,7 +82,8 @@ public class TaskListTest {
             System.setOut(originalOut);
         }
 
-        assertEquals("Here are the matching tasks in your mission log:\n"
+        String lineSeparator = System.lineSeparator();
+        assertEquals("Here are the matching tasks in your mission log:" + lineSeparator
                 + "1.[T][ ] Read book\n"
                 + "4.[T][ ] Read book\n", output.toString());
     }
@@ -98,7 +99,8 @@ public class TaskListTest {
             System.setOut(originalOut);
         }
 
-        assertEquals("Here are the matching tasks in your mission log:\n"
-                + "No matching tasks found in this sector.\n", output.toString());
+        String lineSeparator = System.lineSeparator();
+        assertEquals("Here are the matching tasks in your mission log:" + lineSeparator
+                + "No matching tasks found in this sector." + lineSeparator, output.toString());
     }
 }
