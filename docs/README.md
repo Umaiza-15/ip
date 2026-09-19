@@ -79,6 +79,7 @@ Use the task number shown by `list` when marking, unmarking, or deleting a task.
 | `unmark <task number>` | Mark a task as incomplete. |
 | `delete <task number>` | Delete a task. |
 | `events-on <date>` | Show deadlines and events on a specific date. |
+| `find <keyword>` | Find tasks whose descriptions contain the keyword. |
 | `help` | Display Judey's built-in command guide. |
 | `bye` | Exit Judey. |
 
@@ -122,6 +123,24 @@ Use `events-on <date>` to show events occurring on a particular date. The date m
 ```text
 events-on 2/12/2026
 ```
+
+### Find tasks by description
+
+Use `find <keyword>` to search task descriptions. Searches are case-insensitive and may contain multiple words.
+Matching tasks are shown in their original task-list order and keep their original task numbers.
+
+```text
+find project meeting
+```
+
+If no task matches, Judey displays:
+
+```text
+Here are the matching tasks in your mission log:
+No matching tasks found in this sector.
+```
+
+The search keyword is required. For example, entering only `find` displays an error with the correct format.
 
 ### The `help` command
 

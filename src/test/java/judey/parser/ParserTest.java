@@ -40,6 +40,23 @@ public class ParserTest {
     }
 
     @Test
+    public void parseCommand_findWithKeyword_returnsFindCommand() throws Exception {
+        Command command = Parser.parse("find read book");
+        assertInstanceOf(FindCommand.class, command);
+    }
+
+    @Test
+    public void parseCommand_findWithoutKeyword_exceptionThrown() {
+        JudeyException exception = assertThrows(
+                JudeyException.class,
+                () -> Parser.parse("find")
+        );
+        assertTrue(exception.getMessage().contains("The find command is missing a search keyword."));
+        assertTrue(exception.getMessage().contains(Parser.HIGHLIGHT_START + "<keyword>"
+                + Parser.HIGHLIGHT_END));
+    }
+
+    @Test
     public void parseCommand_todoWithDescription_returnsAddCommand() throws Exception {
         Command command = Parser.parse("todo read book");
         assertInstanceOf(AddTodoCommand.class, command);

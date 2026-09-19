@@ -11,6 +11,7 @@ import judey.command.Command;
 import judey.command.DeleteCommand;
 import judey.command.EventsOnCommand;
 import judey.command.ExitCommand;
+import judey.command.FindCommand;
 import judey.command.HelpCommand;
 import judey.command.ListCommand;
 import judey.command.MarkCommand;
@@ -46,6 +47,8 @@ public class Parser {
                 return parseEvent(args);
             case "events-on":
                 return parseEventsOn(args);
+            case "find":
+                return parseFind(args);
             case "mark":
                 return new MarkCommand(parseIndex(args), true);
             case "unmark":
@@ -54,7 +57,7 @@ public class Parser {
                 return new DeleteCommand(parseIndex(args));
             default:
                 throw new JudeyException("Hmm, that command is still a mystery to me. "
-                        + "Try todo, deadline, event, list, events-on, mark, unmark, delete, help, or bye.");
+                        + "Try todo, deadline, event, list, events-on, find, mark, unmark, delete, help, or bye.");
         }
     }
 
@@ -120,6 +123,14 @@ public class Parser {
         } catch (DateTimeParseException e) {
             throw new JudeyException("Invalid date format. Try: d/M/yyyy (e.g., 2/12/2019)");
         }
+    }
+
+    private static Command parseFind(String args) throws JudeyException {
+        if (args.isBlank()) {
+            throw new JudeyException("The find command is missing a search keyword.\n\nTry: find "
+                    + highlight("<keyword>"));
+        }
+        return new FindCommand(args.trim());
     }
 
     private static int parseIndex(String args) throws JudeyException {

@@ -6,6 +6,9 @@ import judey.task.Todo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -64,5 +67,38 @@ public class TaskListTest {
                 JudeyException.class,
                 () -> emptyList.delete(0)
         );
+    }
+
+    @Test
+    public void findTasks_caseInsensitiveMultiWordSearch_preservesOriginalTaskNumbers() {
+        taskList.getTasks().add(1, new Todo("Buy milk"));
+        taskList.add(new Todo("Read book"));
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out;
+        System.setOut(new PrintStream(output));
+        try {
+            taskList.findTasks("READ BOOK");
+        } finally {
+            System.setOut(originalOut);
+        }
+
+        assertEquals("Here are the matching tasks in your mission log:\n"
+                + "1.[T][ ] Read book\n"
+                + "4.[T][ ] Read book\n", output.toString());
+    }
+
+    @Test
+    public void findTasks_noMatch_printsMissionMessage() {
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out;
+        System.setOut(new PrintStream(output));
+        try {
+            taskList.findTasks("spaceship");
+        } finally {
+            System.setOut(originalOut);
+        }
+
+        assertEquals("Here are the matching tasks in your mission log:\n"
+                + "No matching tasks found in this sector.\n", output.toString());
     }
 }

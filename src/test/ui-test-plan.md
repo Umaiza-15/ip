@@ -220,6 +220,35 @@ Bye. Hope to see you again soon!
 ----------------------------------------
 ```
 
+## Test case: Find tasks by description
+
+### Aim
+
+Verify that `find` supports case-insensitive multi-word searches, preserves original task numbers, and reports
+missing search keywords.
+
+### Inputs
+
+```text
+todo Read a book
+todo Buy milk
+todo Return a book
+find READ BOOK
+find
+bye
+```
+
+### Expected output
+
+```text
+Here are the matching tasks in your mission log:
+1.[T][ ] Read a book
+3.[T][ ] Return a book
+Oopsie! The find command is missing a search keyword.
+
+Try: find <keyword>
+```
+
 ## Test case: Reject missing and unknown commands
 
 ### Aim

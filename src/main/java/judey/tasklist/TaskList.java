@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /** Manages the task list and provides operations to modify tasks. */
 public class TaskList {
@@ -149,10 +150,12 @@ public class TaskList {
     public void findTasks(String keyword) {
         System.out.println("Here are the matching tasks in your mission log:");
         int matchCount = 0;
-        for (Task task : tasks) {
-            if (task.getDescription().toLowerCase().contains(keyword.toLowerCase())) {
+        String normalizedKeyword = keyword.toLowerCase(Locale.ROOT);
+        for (int index = 0; index < tasks.size(); index++) {
+            Task task = tasks.get(index);
+            if (task.getDescription().toLowerCase(Locale.ROOT).contains(normalizedKeyword)) {
                 matchCount++;
-                System.out.print(matchCount + "." + task);
+                System.out.print((index + 1) + "." + task);
             }
         }
         if (matchCount == 0) {

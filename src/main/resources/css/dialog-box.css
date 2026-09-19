@@ -71,7 +71,7 @@
 }
 
 .error-highlight {
-    -fx-fill: #ED33B9;
+    -fx-fill: #A01A7D;
     -fx-font-weight: bold;
     -fx-underline: true;
 }

@@ -58,6 +58,7 @@ public class Ui {
         System.out.println("  delete <task number>\n    Example: delete 1\n");
         System.out.println("Searching and filtering:");
         System.out.println("  events-on <date>\n    Example: events-on 2/12/2019\n");
+        System.out.println("  find <keyword>\n    Example: find project meeting\n");
         System.out.println("Application:");
         System.out.println("  help\n    Example: help\n");
         System.out.println("  bye\n    Example: bye");
