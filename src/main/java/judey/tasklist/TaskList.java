@@ -15,32 +15,33 @@ import java.util.Locale;
 public class TaskList {
     private final List<Task> tasks;
 
-    /**
-     * Creates a TaskList and intialises the list of tasks to be an empty list
-     */
+    /** Creates an empty task list. */
     public TaskList() {
         this.tasks = new ArrayList<>();
     }
 
     /**
-     * Create a TaskList with an existing list of tasks
-     * @param tasks refers to an existing list of tasks
+     * Creates a task list containing the supplied tasks.
+     *
+     * @param tasks tasks to include in the list
      */
     public TaskList(List<Task> tasks) {
         this.tasks = tasks;
     }
 
     /**
-     * Getter for the tasks field
-     * @return the list of tasks
+     * Returns the tasks currently stored in this task list.
+     *
+     * @return the stored tasks
      */
     public List<Task> getTasks() {
         return tasks;
     }
 
     /**
-     * Getter for the size of list of tasks
-     * @return int representing the number of tasks in the list of tasks
+     * Returns the number of tasks in this task list.
+     *
+     * @return the number of stored tasks
      */
     public int getSize() {
         return tasks.size();
@@ -124,17 +125,20 @@ public class TaskList {
     public void printTasksOnDate(LocalDate searchDate) {
         System.out.println("Mission tasks on " + searchDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy")) + ":");
         int count = 0;
-        for (Task task : tasks) {
-            boolean match = false;
+        for (int index = 0; index < tasks.size(); index++) {
+            Task task = tasks.get(index);
+            boolean matches = false;
             if (task instanceof Deadline) {
-                match = ((Deadline) task).getBy().toLocalDate().equals(searchDate);
+                matches = ((Deadline) task).getBy().toLocalDate().equals(searchDate);
             } else if (task instanceof Event) {
-                match = ((Event) task).getFrom().toLocalDate().equals(searchDate);
+                LocalDate startDate = ((Event) task).getFrom().toLocalDate();
+                LocalDate endDate = ((Event) task).getTo().toLocalDate();
+                matches = !searchDate.isBefore(startDate) && !searchDate.isAfter(endDate);
             }
 
-            if (match) {
+            if (matches) {
                 count++;
-                System.out.print(count + "." + task);
+                System.out.print((index + 1) + "." + task);
             }
         }
         if (count == 0) {

@@ -128,6 +128,9 @@ Use `events-on <date: d/M/yyyy>` to show events occurring on a particular date. 
 events-on 2/12/2026
 ```
 
+An event appears for every date from its start date through its end date, inclusive. Tasks shown by `events-on` keep
+their original task numbers so that the displayed number can be used with `mark`, `unmark`, or `delete`.
+
 ### Find tasks by description
 
 Use `find <keyword>` to search task descriptions. Searches are case-insensitive and may contain multiple words.
@@ -196,7 +199,7 @@ bye
 | --- | --- |
 | Judey does not start | Check that JDK 25 is installed, that your terminal is open in the folder containing `judey.jar`, and that you ran `java -jar judey.jar`. |
 | A command is not recognised | Commands are case-sensitive. Use the lowercase command names shown in this guide, such as `todo` or `list`. |
-| A date or time is rejected | Use `d/M/yyyy HHmm`, such as `25/9/2026 2359`, and use a 24-hour clock. |
+| A date or time is rejected | Use `d/M/yyyy HHmm`, such as `25/9/2026 2359`, and use a 24-hour clock. ISO date-time values remain supported for saved data compatibility. |
 | An event or deadline is rejected | Check that the description is present and that you used the markers exactly as `/by`, `/from`, and `/to`. Do not type the angle brackets from the examples. |
 | A task number is rejected | Run `list` and use the current number shown beside the task. Task numbers start at 1. |
 | The task list is empty | Add a task first, then run `list`. If previously saved tasks are missing, make sure you started Judey from the same folder as before so it can find `data/judey.txt`. |

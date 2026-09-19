@@ -37,6 +37,15 @@ public class Event extends Task {
         return this.from;
     }
 
+    /**
+     * Returns the date and time at which the event ends.
+     *
+     * @return event end time
+     */
+    public LocalDateTime getTo() {
+        return this.to;
+    }
+
     @Override
     public String toFileString() {
         return TYPE_EVENT +  " | " + (isDone ? DONE_MARKER: NOT_DONE_MARKER) + " | " + description + " | " + from + " | " + to;

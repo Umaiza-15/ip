@@ -15,6 +15,8 @@ import java.util.List;
 
 /** Handles reading from and writing task data to a storage file on disk. */
 public class Storage {
+    private static final String NOT_DONE_STATUS = "0";
+    private static final String DONE_STATUS = "1";
     private final Path filePath;
 
     public Storage(String filePath) {
@@ -69,7 +71,11 @@ public class Storage {
         }
 
         String type = parts[0];
-        boolean isDone = parts[1].equals("1");
+        String status = parts[1];
+        if (!status.equals(NOT_DONE_STATUS) && !status.equals(DONE_STATUS)) {
+            throw new JudeyException("Invalid task status.");
+        }
+        boolean isDone = status.equals(DONE_STATUS);
         String description = parts[2];
 
         Task task;

@@ -29,6 +29,16 @@ transcripts because the starfield and dividers are visual layout behavior.
    every Judey response has exactly one fixed-length divider line above and below its text.
 6. Confirm that user messages have no divider lines and retain their original bubble styling.
 
+## Task filtering and storage verification
+
+1. Add an event spanning multiple dates, then run `events-on` for its start date, an intermediate date, and its end
+   date. Confirm that the event appears on all three dates.
+2. Run `events-on` for the date immediately before and after the event range. Confirm that the event is not shown.
+3. Add tasks before an event, run `events-on`, and confirm that the displayed task number is its original number in
+   the full task list rather than its position in the filtered results.
+4. Create a save file containing status values `0`, `1`, and an invalid value such as `2`. Confirm that valid records
+   load and the invalid record is skipped with a corruption warning.
+
 ## Test case: Exit politely
 
 ### Aim
