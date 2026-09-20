@@ -29,6 +29,19 @@ transcripts because the starfield and dividers are visual layout behavior.
    every Judey response has exactly one fixed-length divider line above and below its text.
 6. Confirm that user messages have no divider lines and retain their original bubble styling.
 
+## Event date/time validation
+
+1. Add an event with a non-existent date, such as `30/2/2028`, and confirm that Judey displays:
+   `Oopsie! The date/time you entered is invalid. Please use a real date in the format d/M/yyyy HHmm.`
+2. Add an event whose start and end are equal and confirm that Judey displays:
+   `Oopsie! The event start date/time must be before its end date/time.`
+3. Add an event whose end is before its start and confirm the same ordering error is displayed.
+4. Add an event whose start is before the current local date/time and confirm that Judey displays:
+   `Oopsie! The event start date/time cannot be in the past.`
+5. Confirm that rejected events are not displayed in `list` and are not written to storage.
+6. Confirm that a previously stored event whose start is in the past still loads, provided its date/time values are
+   valid and its start is before its end.
+
 ## Task filtering and storage verification
 
 1. Add an event spanning multiple dates, then run `events-on` for its start date, an intermediate date, and its end

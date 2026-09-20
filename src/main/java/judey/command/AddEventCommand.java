@@ -7,6 +7,8 @@ import judey.task.Task;
 import judey.tasklist.TaskList;
 import judey.ui.Ui;
 
+import java.time.LocalDateTime;
+
 /**
  * Represents the action of adding an Event task
  */
@@ -29,7 +31,8 @@ public class AddEventCommand extends Command {
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws JudeyException {
-        Task task = new Event(description, from, to);
+        Event task = new Event(description, from, to);
+        task.validateStartIsNotPast(LocalDateTime.now());
         tasks.add(task);
         storage.save(tasks.getTasks());
         ui.showTaskAdded(task, tasks.getSize());

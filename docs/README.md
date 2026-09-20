@@ -66,6 +66,7 @@ Use the task number shown by `list` when marking, unmarking, or deleting a task.
 - Commands are **case-sensitive**. Use lowercase commands such as `todo`, `list`, and `bye`.
 - Text in angle brackets, such as `<description>` or `<task number>`, is a placeholder. Replace it with your own value, and do not type the angle brackets.
 - Dates and times use `d/M/yyyy HHmm`, with a 24-hour clock. For example, `2/12/2026 1800` means 2 December 2026 at 6:00 PM.
+- Event start times cannot be in the past, and an event's start must be before its end.
 - Use the markers exactly as shown: `/by`, `/from`, and `/to`. Do not insert spaces inside them or change their spelling.
 - A deadline needs one `/by` marker. An event needs both `/from` and `/to`, in that order. Include a description before the marker.
 - Separate the command and its arguments with spaces, but do not add extra characters or punctuation to the command names or markers.
@@ -200,7 +201,8 @@ separate task-not-found error.
 | --- | --- |
 | Judey does not start | Check that JDK 25 is installed, that your terminal is open in the folder containing `judey.jar`, and that you ran `java -jar judey.jar`. |
 | A command is not recognised | Commands are case-sensitive. Use the lowercase command names shown in this guide, such as `todo` or `list`. |
-| A date or time is rejected | Use `d/M/yyyy HHmm`, such as `25/9/2026 2359`, and use a 24-hour clock. ISO date-time values remain supported for saved data compatibility. |
+| A date or time is rejected | Use a real date in `d/M/yyyy HHmm` format, such as `25/9/2026 2359`, and use a 24-hour clock. |
+| An event is rejected | Make sure its start time is not in the past and that its start date/time is before its end date/time. |
 | An event or deadline is rejected | Check that the description is present and that you used the markers exactly as `/by`, `/from`, and `/to`. Do not type the angle brackets from the examples. |
 | A task number is rejected | Run `list` and use the current number shown beside the task. Enter the number using digits, starting from 1; for example, use `mark 1`, not `mark one`. |
 | The task list is empty | Add a task first, then run `list`. If previously saved tasks are missing, make sure you started Judey from the same folder as before so it can find `data/judey.txt`. |

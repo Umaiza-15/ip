@@ -24,9 +24,29 @@ public class Event extends Task {
         super(desc);
         this.from = DateTimeUtil.parse(from);
         this.to = DateTimeUtil.parse(to);
+        validateTimeRange();
         assert this.from != null && this.to != null
                 : "parseDateTime() either returns a valid LocalDateTime or throws JudeyException; 'from' and 'to' "
                 + "should never be null once this constructor completes successfully";
+    }
+
+    /** Ensures that an event has a positive duration. */
+    private void validateTimeRange() throws JudeyException {
+        if (!this.from.isBefore(this.to)) {
+            throw new JudeyException("The event start date/time must be before its end date/time.");
+        }
+    }
+
+    /**
+     * Validates that a newly created event does not begin in the past.
+     *
+     * @param currentDateTime the current local date/time, supplied by the caller
+     * @throws JudeyException if the event has already started
+     */
+    public void validateStartIsNotPast(LocalDateTime currentDateTime) throws JudeyException {
+        if (this.from.isBefore(currentDateTime)) {
+            throw new JudeyException("The event start date/time cannot be in the past.");
+        }
     }
 
     /**

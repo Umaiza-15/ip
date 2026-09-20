@@ -38,4 +38,17 @@ class StorageTest {
         assertEquals(1, tasks.size());
         assertTrue(tasks.get(0).getDescription().equals("valid"));
     }
+
+    @Test
+    void load_skipsEventWithInvalidTimeRangeAndKeepsValidRecords() throws Exception {
+        Path file = temporaryDirectory.resolve("tasks.txt");
+        Files.write(file, List.of(
+                "E | 0 | invalid | 2026-09-26T15:00 | 2026-09-26T14:00",
+                "E | 0 | valid | 2026-09-26T14:00 | 2026-09-26T15:00"));
+
+        List<Task> tasks = new Storage(file.toString()).load();
+
+        assertEquals(1, tasks.size());
+        assertEquals("valid", tasks.get(0).getDescription());
+    }
 }

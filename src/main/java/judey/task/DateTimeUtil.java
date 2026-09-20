@@ -3,6 +3,7 @@ package judey.task;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 
 import judey.exception.JudeyException;
 
@@ -11,7 +12,9 @@ import judey.exception.JudeyException;
  * Extracted here to avoid duplicating the same parsing rules and formats in both task types.
  */
 public final class DateTimeUtil {
-    private static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
+    private static final String DATE_TIME_PATTERN = "\\d{1,2}/\\d{1,2}/\\d{4} \\d{4}";
+    private static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.ofPattern("d/M/uuuu HHmm")
+            .withResolverStyle(ResolverStyle.STRICT);
     private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mma");
 
     private DateTimeUtil() {
@@ -25,6 +28,10 @@ public final class DateTimeUtil {
             try {
                 return LocalDateTime.parse(text, INPUT_FORMAT);
             } catch (DateTimeParseException userFormatParseFailed) {
+                if (text.matches(DATE_TIME_PATTERN)) {
+                    throw new JudeyException("The date/time you entered is invalid. "
+                            + "Please use a real date in the format d/M/yyyy HHmm.");
+                }
                 throw new JudeyException("Please use date format: d/M/yyyy HHmm (e.g., 2/12/2019 1800)");
             }
         }
