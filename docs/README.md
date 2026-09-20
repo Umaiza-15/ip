@@ -13,9 +13,11 @@
   - [Add tasks](#add-tasks)
   - [Manage tasks](#manage-tasks)
   - [Find events by date](#find-events-by-date)
+  - [Find tasks by description](#find-tasks-by-description)
   - [The `help` command](#the-help-command)
   - [The `bye` command](#the-bye-command)
 - [Common problems](#common-problems)
+  - [Missing or invalid command arguments](#missing-or-invalid-command-arguments)
 - [Tips](#tips)
 
 ## Getting started
@@ -37,10 +39,6 @@ To get started:
    ```
 
 The Judey window will open with a chat box for entering commands. Your tasks will be saved in a `data` subfolder as `data/judey.txt`.
-
-The GUI background uses a repeating starfield so it fills the window when you resize it. Every Judey response is framed
-by the existing fixed-length divider line above and below its text. These visual changes do not affect command syntax,
-task storage, or command-line output.
 
 Your tasks are saved automatically in `data/judey.txt`, so they will still be available the next time you start Judey from the same folder.
 
@@ -149,30 +147,6 @@ No matching tasks found in this sector.
 
 The search keyword is required. For example, entering only `find` displays an error with the correct format.
 
-### Missing or invalid command arguments
-
-The `mark`, `unmark`, `delete`, and `events-on` commands report missing or invalid arguments with a correction
-example. In the GUI, the missing or invalid value is highlighted in that example. For example, entering `mark`
-shows:
-
-```text
-The mark command is missing a task number.
-
-Try: mark <task number>
-```
-
-For `events-on`, the correction includes the required date format:
-
-```text
-The events-on command is missing a date.
-
-Try: events-on <date: d/M/yyyy>
-```
-
-The highlighting is GUI-only; the command-line interface displays the same correction without visual highlighting.
-Task numbers must be positive whole numbers. A positive number that is not present in the task list produces a
-separate task-not-found error.
-
 ### The `help` command
 
 Enter `help` when you need a reminder of the available commands. Judey displays the command groups, expected formats, and examples for adding, managing, and filtering tasks. Use the examples as templates: replace values such as `<description>` and `<task number>` with your own information, but keep the command names and `/by`, `/from`, and `/to` markers unchanged.
@@ -195,18 +169,44 @@ bye
 
 ## Common problems
 
+### Missing or invalid command arguments
+
+The `mark`, `unmark`, `delete`, and `events-on` commands report missing or invalid arguments with a correction
+example. Judey highlights the missing or invalid value in that example. For example, entering `mark`
+shows:
+
+```text
+The mark command is missing a task number.
+
+Try: mark <task number>
+```
+
+For `events-on`, the correction includes the required date format:
+
+```text
+The events-on command is missing a date.
+
+Try: events-on <date: d/M/yyyy>
+```
+
+Task numbers must be positive whole numbers written using digits. For example, use `mark 1`, not `mark one`.
+This rule also applies to `unmark` and `delete`. A positive number that is not present in the task list produces a
+separate task-not-found error.
+
+### Other common problems
+
 | Problem | What to do |
 | --- | --- |
 | Judey does not start | Check that JDK 25 is installed, that your terminal is open in the folder containing `judey.jar`, and that you ran `java -jar judey.jar`. |
 | A command is not recognised | Commands are case-sensitive. Use the lowercase command names shown in this guide, such as `todo` or `list`. |
 | A date or time is rejected | Use `d/M/yyyy HHmm`, such as `25/9/2026 2359`, and use a 24-hour clock. ISO date-time values remain supported for saved data compatibility. |
 | An event or deadline is rejected | Check that the description is present and that you used the markers exactly as `/by`, `/from`, and `/to`. Do not type the angle brackets from the examples. |
-| A task number is rejected | Run `list` and use the current number shown beside the task. Task numbers start at 1. |
+| A task number is rejected | Run `list` and use the current number shown beside the task. Enter the number using digits, starting from 1; for example, use `mark 1`, not `mark one`. |
 | The task list is empty | Add a task first, then run `list`. If previously saved tasks are missing, make sure you started Judey from the same folder as before so it can find `data/judey.txt`. |
-| An error message is unclear | For `mark`, `unmark`, `delete`, and `events-on`, the GUI highlights the value that is missing or incorrect in the suggested command. Replace that part and submit the command again. |
+| An error message is unclear | When a command has missing or invalid input, Judey highlights the corresponding missing or incorrect value in the suggested command. Replace that part and submit the command again. |
 
 ## Tips
 
 - Use `list` before `mark`, `unmark`, or `delete` if you are unsure of a task number.
-- If a command is invalid or missing information, Judey shows an example of the expected format. In the GUI, the highlighted part of that example shows what was wrong or missing. Correct that part and try again.
+- If a command is invalid or missing information, Judey shows an example of the expected format and highlights what was wrong or missing. Correct that part and try again.
 - Keep the `/by`, `/from`, and `/to` markers exactly as shown in the examples.

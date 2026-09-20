@@ -47,7 +47,8 @@ public class Ui {
         System.out.println("Creating tasks:");
         System.out.println("  todo <description>\n    Example: todo read book\n");
         System.out.println("  deadline <description> /by <date and time>\n"
-                + "    Example: deadline submit report /by 2026-12-31 2359\n");
+                + "    Format: d/M/yyyy HHmm\n"
+                + "    Example: deadline submit report /by 31/12/2026 2359\n");
         System.out.println("  event <description> /from <date and time> /to <date and time>\n"
                 + "    Format: d/M/yyyy HHmm\n"
                 + "    Example: event team meeting /from 15/10/2026 1400 /to 15/10/2026 1600\n");
@@ -57,7 +58,9 @@ public class Ui {
         System.out.println("  unmark <task number>\n    Example: unmark 1\n");
         System.out.println("  delete <task number>\n    Example: delete 1\n");
         System.out.println("Searching and filtering:");
-        System.out.println("  events-on <date>\n    Example: events-on 2/12/2019\n");
+        System.out.println("  events-on <date>\n"
+                + "    Format: d/M/yyyy\n"
+                + "    Example: events-on 2/12/2026\n");
         System.out.println("  find <keyword>\n    Example: find project meeting\n");
         System.out.println("Application:");
         System.out.println("  help\n    Example: help\n");

@@ -9,7 +9,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="500.0" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="judey.gui.MainWindow">
     <children>
-        <Pane fx:id="starfield" styleClass="starfield" mouseTransparent="true" opacity="0.28"
+        <Pane fx:id="starfield" styleClass="starfield" mouseTransparent="true" opacity="0.4"
               AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
               AnchorPane.topAnchor="0.0" />
         <TextField fx:id="userInput" layoutY="658.0" onAction="#handleUserInput" prefHeight="41.0" prefWidth="424.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="76.0" />
