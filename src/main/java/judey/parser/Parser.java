@@ -17,6 +17,7 @@ import judey.command.ListCommand;
 import judey.command.MarkCommand;
 import judey.exception.JudeyException;
 
+/** Converts user-entered command text into executable Judey commands. */
 public class Parser {
     public static final String HIGHLIGHT_START = "[[highlight]]";
     public static final String HIGHLIGHT_END = "[[/highlight]]";
@@ -24,6 +25,13 @@ public class Parser {
     private static final String EVENT_START_FORMAT = "<start date and start time: d/M/yyyy HHmm>";
     private static final String EVENT_END_FORMAT = "<end date and end time: d/M/yyyy HHmm>";
 
+    /**
+     * Parses one complete user command.
+     *
+     * @param fullCommand command text entered by the user
+     * @return the command represented by the input
+     * @throws JudeyException if the command or its arguments are invalid
+     */
     public static Command parse(String fullCommand) throws JudeyException {
         String[] parts = fullCommand.trim().split("\\s+", 2);
         String commandWord = parts[0];

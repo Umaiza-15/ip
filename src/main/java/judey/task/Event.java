@@ -48,7 +48,8 @@ public class Event extends Task {
 
     @Override
     public String toFileString() {
-        return TYPE_EVENT +  " | " + (isDone ? DONE_MARKER: NOT_DONE_MARKER) + " | " + description + " | " + from + " | " + to;
+        return TYPE_EVENT + " | " + (isDone ? DONE_MARKER : NOT_DONE_MARKER) + " | "
+                + description + " | " + from + " | " + to;
     }
 
     @Override

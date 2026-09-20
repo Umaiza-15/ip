@@ -31,37 +31,34 @@ public class MainWindow extends AnchorPane {
     private Judey judey;
 
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/UserExplorer.png"));
-    private Image dukeImage = new Image(this.getClass().getResourceAsStream("/images/DaJudey.png"));
+    private Image judeyImage = new Image(this.getClass().getResourceAsStream("/images/DaJudey.png"));
 
     @FXML
     public void initialize() {
         scrollPane.setVvalue(0.0);
     }
 
-    /** Injects the Judey instance */
+    /** Injects the Judey instance used to process commands from this window. */
     public void setJudey(Judey j) {
         judey = j;
         dialogContainer.getChildren().add(
-                DialogBox.getBannerDialog(judey.getWelcomeMessage(), dukeImage)
+                DialogBox.getBannerDialog(judey.getWelcomeMessage(), judeyImage)
         );
         scrollPane.setVvalue(0.0);
     }
 
-    /**
-     * Creates two dialog boxes, one echoing user input and the other containing Judey's reply and then appends them to
-     * the dialog container. Clears the user input after processing.
-     */
+    /** Creates the user and Judey response dialogs for a submitted command. */
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
         String response = judey.getResponse(input);
         dialogContainer.getChildren().add(DialogBox.getUserDialog(input, userImage));
         if (input.trim().equals("help")) {
-            dialogContainer.getChildren().add(DialogBox.getHelpDialog(response, dukeImage));
+            dialogContainer.getChildren().add(DialogBox.getHelpDialog(response, judeyImage));
         } else if (DialogBox.isErrorResponse(response)) {
-            dialogContainer.getChildren().add(DialogBox.getErrorDialog(response, dukeImage));
+            dialogContainer.getChildren().add(DialogBox.getErrorDialog(response, judeyImage));
         } else {
-            dialogContainer.getChildren().add(DialogBox.getDukeDialog(response, dukeImage));
+            dialogContainer.getChildren().add(DialogBox.getJudeyDialog(response, judeyImage));
         }
         Platform.runLater(() -> scrollPane.setVvalue(1.0));
         userInput.clear();

@@ -81,22 +81,22 @@ public class Storage {
         Task task;
         switch (type) {
             case Task.TYPE_TODO:
-            task = new Todo(description);
-            break;
+                task = new Todo(description);
+                break;
             case Task.TYPE_DEADLINE:
-            if (parts.length < 4) {
-                throw new JudeyException("Missing due date for deadline.");
-            }
-            task = new Deadline(description, parts[3]);
-            break;
+                if (parts.length < 4) {
+                    throw new JudeyException("Missing due date for deadline.");
+                }
+                task = new Deadline(description, parts[3]);
+                break;
             case Task.TYPE_EVENT:
-            if (parts.length < 5) {
-                throw new JudeyException("Missing time details for event.");
-            }
-            task = new Event(description, parts[3], parts[4]);
-            break;
-        default:
-            throw new JudeyException("Unknown task type.");
+                if (parts.length < 5) {
+                    throw new JudeyException("Missing time details for event.");
+                }
+                task = new Event(description, parts[3], parts[4]);
+                break;
+            default:
+                throw new JudeyException("Unknown task type.");
         }
 
         if (isDone) {

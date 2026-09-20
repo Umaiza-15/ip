@@ -39,7 +39,8 @@ public class DialogBox extends HBox {
             fxmlLoader.setRoot(this);
             fxmlLoader.load();
         } catch (IOException e) {
-            e.printStackTrace();
+            getChildren().add(new Label(fallbackMessage()));
+            return;
         }
 
         String displayedText = judeyMessage ? frameWithDividers(text) : text;
@@ -121,37 +122,45 @@ public class DialogBox extends HBox {
         getActiveDialog().getStyleClass().add("reply-label");
     }
 
+    /** Creates a dialog displaying text entered by the user. */
     public static DialogBox getUserDialog(String text, Image img) {
         return new DialogBox(text, img, false);
     }
 
-    public static DialogBox getDukeDialog(String text, Image img) {
+    /** Creates a dialog displaying a response from Judey. */
+    public static DialogBox getJudeyDialog(String text, Image img) {
         var db = new DialogBox(text, img, true);
         db.flip();
         return db;
     }
 
-    /** Creates a visually distinct dialog box for GUI error responses. */
+    /** Creates a Judey response styled as an error. */
     public static DialogBox getErrorDialog(String text, Image img) {
-        var db = getDukeDialog(text, img);
+        var db = getJudeyDialog(text, img);
         db.getActiveDialog().getStyleClass().add("error-label");
         return db;
     }
 
+    /** Creates a Judey response styled as the welcome banner. */
     public static DialogBox getBannerDialog(String text, Image img) {
-        var db = getDukeDialog(text, img);
+        var db = getJudeyDialog(text, img);
         db.getActiveDialog().getStyleClass().add("banner-label");
         return db;
     }
 
-    /** Creates a styled dialog box for the application's help content. */
+    /** Creates a Judey response styled as help content. */
     public static DialogBox getHelpDialog(String text, Image img) {
-        var db = getDukeDialog(text, img);
+        var db = getJudeyDialog(text, img);
         db.getActiveDialog().getStyleClass().add("help-label");
         return db;
     }
 
     private javafx.scene.Node getActiveDialog() {
         return plainDialog.isManaged() ? plainDialog : richDialog;
+    }
+
+    /** Returns the user-facing message used when a dialog cannot be loaded. */
+    static String fallbackMessage() {
+        return "Judey could not display this message. Please restart the application.";
     }
 }

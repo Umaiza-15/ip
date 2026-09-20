@@ -30,4 +30,10 @@ class DialogBoxTest {
                 "----------------------------------------\nOopsie! The command is invalid.\n----------------------------------------"));
     }
 
+    @Test
+    void fallbackMessage_isUserFriendly() {
+        assertEquals("Judey could not display this message. Please restart the application.",
+                DialogBox.fallbackMessage());
+    }
+
 }
