@@ -18,6 +18,7 @@
   - [The `bye` command](#the-bye-command)
 - [Common problems](#common-problems)
   - [Missing or invalid command arguments](#missing-or-invalid-command-arguments)
+  - [Other common problems](#other-common-problems)
 - [Tips](#tips)
 
 ## Getting started
